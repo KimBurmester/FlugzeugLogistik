@@ -1,3 +1,5 @@
+@import url('menu.css');
+
 body{
     font-family: Arial, sans-serif;
     margin: 0;
@@ -32,7 +34,7 @@ main{
     background-color: #193042;
     color: white;
     padding: 20px;
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
 }
 
 .header-container{
@@ -91,3 +93,5 @@ main{
     justify-content: center;
     align-items: center;
 }
+
+

@@ -1,0 +1,35 @@
+.header-menu {
+    position: relative;   
+    cursor: pointer;
+}
+
+.menu-dropdown {
+    display: none;                
+    position: absolute;           
+    top: 100%;                   
+    left: 0;
+    background-color: #2d5675;
+    min-width: 180px;
+    z-index: 100;
+    margin-top: 30px;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.5);
+}
+
+.menu-dropdown a {
+    display: block;
+    padding: 12px 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.menu-dropdown a:hover {
+    background-color: #2a4a62;
+}
+
+.menu-dropdown.open {
+    display: block;
+}
+
+.menu-dropdown.close{
+    display: none;
+}
