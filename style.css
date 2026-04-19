@@ -1,0 +1,52 @@
+body{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    font-size: 22px;
+}
+
+.mr{
+    margin-right: 20px;
+}
+
+.Header{
+    background-color: #193042;
+    color: white;
+    padding: 20px;
+}
+
+.header-container{
+    display: flex;
+    justify-content: left;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.header-logo{
+    background-image: url('logistikapp.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60px;
+    height: 60px;
+}
+
+.header-text-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.header-title{
+    font-size: 24px;
+    font-weight: bold;
+    align-self: center;
+}
+
+.header-menu{
+    align-self: center;
+}
+
+.header-user{
+    align-self: center;
+}
