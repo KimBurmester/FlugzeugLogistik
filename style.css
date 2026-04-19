@@ -44,9 +44,19 @@ body{
 }
 
 .header-menu{
+    background-image: url('/icons/application.svg');
     align-self: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
 }
 
 .header-user{
+    background-image: url('/icons/user_2.svg');
     align-self: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 40px;
+    height: 40px;
 }
