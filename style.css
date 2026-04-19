@@ -74,7 +74,7 @@ main{
     height: 40px;
 }
 
-.header-user{
+.user-menu{
     background-image: url('/icons/user_2.svg');
     align-self: center;
     background-size: contain;
@@ -83,9 +83,13 @@ main{
     height: 40px;
 }
 
+.header-title-text{
+    font-weight: bold;
+}
+
 .Footer{
     background-color: #193042;
-    color: rgb(249, 240, 194);
+    color: rgb(108, 108, 108);
 }
 
 .footer-container{
@@ -94,4 +98,12 @@ main{
     align-items: center;
 }
 
-
+/* Responsive Design */
+@media (max-width: 600px) {
+    .footer-text{
+        font-size: 14px;
+    }
+    .header-logo{
+        display: none;
+    }
+}
