@@ -1,17 +1,49 @@
+.register-area{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
 .Registerkarten{
     display: flex;
+    flex-direction: column;
+}
+
+.Register-1{
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
 }
 
-.Register-1{
+.Register-1-A{
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+}
+
+.Register-1-B{
+    border: 1px solid black;
+    width: 100%;
+    height: 500px;
+    border-radius: 5px;
+    padding: 20px;
+    background-color: #3d6a8a;
+    color: white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.Register-1-C{
+    border: 1px solid black;
+    width: 100%;
+    height: 700px;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
 }
 
 .Register-2{
@@ -20,4 +52,36 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 15px;
+}
+
+.register-container-1{
+    width: 200px;
+    height: 40px;
+    border: 1px solid black;
+    /* background-color: #2d5675; */
+    /* color: white; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;   
+}
+
+.register-container-1:hover{
+    background-color: #2a4a62;
+    color: white;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);
+}
+
+.register-container-2{
+    width: 600px;
+    height: 100vh;
+    border: 1px solid black;
+    /* background-color: #2d5675; */
+    /* color: white; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.3);   
 }

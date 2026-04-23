@@ -16,6 +16,10 @@ main{
     flex: 1;
 }
 
+div{
+    box-sizing: border-box;
+}
+
 .button{
     background-color: #193042;
     color: white;
