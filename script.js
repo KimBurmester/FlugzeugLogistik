@@ -129,3 +129,24 @@ document.querySelectorAll('.chip-x').forEach(x => {
     if (chip) chip.remove();
   });
 });
+
+
+/* ==========================================================================
+    Artikel Manager
+   ========================================================================== */
+
+const speichernBtn = document.querySelector('.btn.btn-primary');
+if (speichernBtn) {
+  speichernBtn.addEventListener('click', () => {
+    const wert = document.querySelector('#artikelbezeichnung').value;
+    console.log(wert);
+  });
+}
+
+
+
+
+
+
+
+
