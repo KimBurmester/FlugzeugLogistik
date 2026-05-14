@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aero Dynamic Logistic – Artikelbewegung</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../logistikapp.png">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+<section class="container">
+
+    <div class="page-header">
+        <h2 class="section-title">Artikelbewegung</h2>
+        <div class="row" style="gap: 8px;">
+            <button class="btn btn-sm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Export
+            </button>
+            <button class="btn btn-primary btn-sm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                Bewegung erfassen
+            </button>
+        </div>
+    </div>
+
+    <!-- KPIs -->
+    <div class="grid-4" style="margin-bottom: 24px;">
+        <div class="metric-card">
+            <div class="metric-label">Bewegungen heute</div>
+            <div class="metric-value">47</div>
+            <div class="metric-trend up">+12 vs. gestern</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Wareneingänge</div>
+            <div class="metric-value" style="color: var(--success-solid);">12</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Auslagerungen</div>
+            <div class="metric-value" style="color: var(--info-solid);">28</div>
+        </div>
+        <div class="metric-card">
+            <div class="metric-label">Versandfertig</div>
+            <div class="metric-value" style="color: var(--warning-solid);">7</div>
+        </div>
+    </div>
+
+    <!-- Filter bar -->
+    <div class="filter-bar">
+        <div class="search-field">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Artikelnummer, Bezeichnung oder Benutzer…" />
+        </div>
+        <div class="field" style="margin: 0; min-width: 170px;">
+            <select>
+                <option value="">Alle Bewegungstypen</option>
+                <option>Wareneingang</option>
+                <option>Einlagerung</option>
+                <option>Umlagerung</option>
+                <option>Auslagerung</option>
+                <option>Versand</option>
+            </select>
+        </div>
+        <div class="field" style="margin: 0; min-width: 150px;">
+            <input type="text" placeholder="Datum (TT.MM.JJJJ)" />
+        </div>
+        <div class="field" style="margin: 0; min-width: 150px;">
+            <select>
+                <option value="">Alle Benutzer</option>
+                <option>K. Burmester</option>
+                <option>M. Schulz</option>
+                <option>J. Weber</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Tabelle -->
+    <div class="table-wrap">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Zeitstempel</th>
+                    <th>Artikelnr.</th>
+                    <th>Bezeichnung</th>
+                    <th>Bewegungstyp</th>
+                    <th>Von</th>
+                    <th>Nach / Ziel</th>
+                    <th>Transporteinheit</th>
+                    <th>Menge</th>
+                    <th>Scanner / Benutzer</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;08:14</td>
+                    <td class="td-mono">239324875</td>
+                    <td>Hydraulikschlauch DN16</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Wareneingang</span></td>
+                    <td>Lieferant (Bosch)</td>
+                    <td>Wareneingang / Prüfzone</td>
+                    <td class="td-mono">PAL-2026-0041</td>
+                    <td>24</td>
+                    <td>K. Burmester</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;08:52</td>
+                    <td class="td-mono">239324875</td>
+                    <td>Hydraulikschlauch DN16</td>
+                    <td><span class="badge badge-info"><span class="dot"></span>Einlagerung</span></td>
+                    <td>Wareneingang</td>
+                    <td>Halle 1 / R3 / F2</td>
+                    <td class="td-mono">PAL-2026-0041</td>
+                    <td>24</td>
+                    <td>K. Burmester</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;09:02</td>
+                    <td class="td-mono">847362918</td>
+                    <td>O-Ring 50×3 NBR</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Wareneingang</span></td>
+                    <td>Lieferant (Parker)</td>
+                    <td>Wareneingang / Prüfzone</td>
+                    <td class="td-mono">KAR-2026-0088</td>
+                    <td>500</td>
+                    <td>M. Schulz</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;09:44</td>
+                    <td class="td-mono">847362918</td>
+                    <td>O-Ring 50×3 NBR</td>
+                    <td><span class="badge badge-info"><span class="dot"></span>Einlagerung</span></td>
+                    <td>Wareneingang</td>
+                    <td>Halle 1 / R7 / F12</td>
+                    <td class="td-mono">KAR-2026-0088</td>
+                    <td>500</td>
+                    <td>M. Schulz</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;10:31</td>
+                    <td class="td-mono">564738291</td>
+                    <td>Pneumatikzylinder Ø50</td>
+                    <td><span class="badge badge-purple"><span class="dot"></span>Umlagerung</span></td>
+                    <td>Halle 2 / R4 / F1</td>
+                    <td>Halle 3 / R2 / F8</td>
+                    <td class="td-mono">–</td>
+                    <td>3</td>
+                    <td>J. Weber</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;11:15</td>
+                    <td class="td-mono">394857231</td>
+                    <td>Drucksensor 0–400 bar</td>
+                    <td><span class="badge badge-warning"><span class="dot"></span>Auslagerung</span></td>
+                    <td>Halle 2 / R1 / F5</td>
+                    <td>Kommissionierung / Zone A</td>
+                    <td class="td-mono">TP-2026-0017</td>
+                    <td>2</td>
+                    <td>K. Burmester</td>
+                    <td><span class="badge badge-warning"><span class="dot"></span>In Bearbeitung</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;12:44</td>
+                    <td class="td-mono">193847562</td>
+                    <td>Kabelkanal 40×60 mm</td>
+                    <td><span class="badge badge-danger"><span class="dot"></span>Versand</span></td>
+                    <td>Kommissionierung</td>
+                    <td>Bahnhof Hamburg-Waltershof</td>
+                    <td class="td-mono">LKW-2026-0009</td>
+                    <td>20</td>
+                    <td>M. Schulz</td>
+                    <td><span class="badge badge-info"><span class="dot"></span>Unterwegs</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;13:08</td>
+                    <td class="td-mono">102938475</td>
+                    <td>Kugelventil ½"</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Wareneingang</span></td>
+                    <td>Lieferant (Hydac)</td>
+                    <td>Wareneingang / Prüfzone</td>
+                    <td class="td-mono">PAL-2026-0042</td>
+                    <td>50</td>
+                    <td>J. Weber</td>
+                    <td><span class="badge badge-warning"><span class="dot"></span>In Prüfung</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;14:22</td>
+                    <td class="td-mono">239324875</td>
+                    <td>Hydraulikschlauch DN16</td>
+                    <td><span class="badge badge-warning"><span class="dot"></span>Auslagerung</span></td>
+                    <td>Halle 1 / R3 / F2</td>
+                    <td>Produktion / Linie 2</td>
+                    <td class="td-mono">TP-2026-0018</td>
+                    <td>6</td>
+                    <td>K. Burmester</td>
+                    <td><span class="badge badge-success"><span class="dot"></span>Abgeschlossen</span></td>
+                </tr>
+                <tr>
+                    <td class="td-mono">15.05.2026&nbsp;15:03</td>
+                    <td class="td-mono">728364910</td>
+                    <td>Hydrauliköl HLP 46</td>
+                    <td><span class="badge badge-danger"><span class="dot"></span>Versand</span></td>
+                    <td>Halle 1 / R1 / F1</td>
+                    <td>Bahnhof Frankfurt-Ost</td>
+                    <td class="td-mono">LKW-2026-0010</td>
+                    <td>60</td>
+                    <td>M. Schulz</td>
+                    <td><span class="badge badge-info"><span class="dot"></span>Unterwegs</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Legende -->
+    <div class="row" style="margin-top: 14px; gap: 10px; flex-wrap: wrap;">
+        <span style="font-size: 12px; color: var(--text-tertiary);">Legende:</span>
+        <span class="badge badge-success"><span class="dot"></span>Wareneingang</span>
+        <span class="badge badge-info"><span class="dot"></span>Einlagerung</span>
+        <span class="badge badge-purple"><span class="dot"></span>Umlagerung</span>
+        <span class="badge badge-warning"><span class="dot"></span>Auslagerung</span>
+        <span class="badge badge-danger"><span class="dot"></span>Versand</span>
+    </div>
+
+    <!-- Pagination -->
+    <div class="row" style="margin-top: 16px; justify-content: space-between;">
+        <span style="font-size: 13px; color: var(--text-tertiary);">Zeigt 1–10 von 47 Bewegungen</span>
+        <div class="row" style="gap: 6px;">
+            <button class="btn btn-sm" disabled>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <button class="btn btn-sm btn-primary">1</button>
+            <button class="btn btn-sm">2</button>
+            <button class="btn btn-sm">3</button>
+            <button class="btn btn-sm">4</button>
+            <button class="btn btn-sm">5</button>
+            <button class="btn btn-sm">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+    </div>
+
+</section>
+</main>
+</body>
+</html>

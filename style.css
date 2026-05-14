@@ -844,6 +844,117 @@ input[type="range"]::-moz-range-thumb {
 .sidebar-overlay.active { display: block; }
 
 /* ==========================================================================
+   Data Table
+   ========================================================================== */
+
+.table-wrap {
+  overflow-x: auto;
+  border: 0.5px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table thead th {
+  background: var(--bg-secondary);
+  color: var(--text-tertiary);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 0.5px solid var(--border-subtle);
+  white-space: nowrap;
+}
+
+.data-table tbody tr {
+  border-bottom: 0.5px solid var(--border-subtle);
+  transition: background var(--transition-fast);
+}
+
+.data-table tbody tr:last-child { border-bottom: none; }
+.data-table tbody tr:hover { background: var(--bg-secondary); }
+
+.data-table tbody td {
+  padding: 11px 14px;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+.td-mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Filter bar
+   ========================================================================== */
+
+.filter-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.filter-bar .field { margin: 0; }
+
+.search-field {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+
+.search-field svg {
+  position: absolute;
+  left: 11px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-tertiary);
+  pointer-events: none;
+}
+
+.search-field input { padding-left: 34px; }
+
+/* ==========================================================================
+   Page header
+   ========================================================================== */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.page-header .section-title { margin: 0; }
+
+/* ==========================================================================
+   Generator preview
+   ========================================================================== */
+
+.generator-preview {
+  background: var(--bg-secondary);
+  border: 0.5px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 12px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  min-height: 90px;
+  line-height: 1.9;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* ==========================================================================
    Responsive: ≤ 1030px — kurze Tab-Labels, kompaktere Topbar
    ========================================================================== */
 
@@ -901,10 +1012,13 @@ input[type="range"]::-moz-range-thumb {
 @media (max-width: 600px) {
   .topbar { padding: 10px 14px; }
   .container { padding: 16px 14px 60px; }
+  .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
   .toptitle { font-size: 0; }
   .toptitle::before { content: 'ADL'; font-size: 15px; }
+  .filter-bar { flex-direction: column; align-items: stretch; }
+  .search-field { min-width: unset; }
 }
 
 /* ==========================================================================

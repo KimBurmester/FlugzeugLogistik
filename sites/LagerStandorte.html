@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aero Dynamic Logistic – Lager &amp; Standorte</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../logistikapp.png">
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<main>
+<section class="container">
+    <h2 class="section-title">Lager &amp; Standorte</h2>
+
+    <!-- Lager anlegen -->
+    <p class="form-group-label">Lager anlegen</p>
+    <div class="grid-3">
+        <div class="field">
+            <label>Lagerbezeichnung</label>
+            <input type="text" id="lagerBezeichnung" placeholder="z. B. Hauptlager Nord" />
+        </div>
+        <div class="field">
+            <label>Lager-ID</label>
+            <input type="text" id="lagerId" placeholder="z. B. LGR-001" />
+        </div>
+        <div class="field">
+            <label>Lagertyp</label>
+            <select id="lagerTyp">
+                <option>Hauptlager</option>
+                <option>Nebenlager</option>
+                <option>Außenlager</option>
+                <option>Umschlagslager</option>
+                <option>Zolllager</option>
+                <option>Konsignationslager</option>
+            </select>
+        </div>
+    </div>
+    <div class="grid-3">
+        <div class="field">
+            <label>Standort / Adresse</label>
+            <input type="text" id="lagerAdresse" placeholder="z. B. Industriestr. 12, 22769 Hamburg" />
+        </div>
+        <div class="field">
+            <label>Nutzfläche (m²)</label>
+            <input type="text" id="lagerFlaeche" placeholder="z. B. 2400" />
+        </div>
+        <div class="field">
+            <label>Status</label>
+            <select id="lagerStatus">
+                <option>Aktiv</option>
+                <option>Inaktiv</option>
+                <option>Gesperrt</option>
+                <option>In Planung</option>
+            </select>
+        </div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 4px; margin-bottom: 36px;">
+        <button class="btn btn-primary">Lager speichern</button>
+        <button class="btn">Zurücksetzen</button>
+    </div>
+
+    <!-- Halle anlegen -->
+    <p class="form-group-label">Halle anlegen</p>
+    <div class="grid-4">
+        <div class="field">
+            <label>Hallennummer</label>
+            <input type="text" id="hallenNummer" placeholder="z. B. H-01" />
+        </div>
+        <div class="field">
+            <label>Hallenbezeichnung</label>
+            <input type="text" id="hallenBezeichnung" placeholder="z. B. Halle Ost" />
+        </div>
+        <div class="field">
+            <label>Zugehöriges Lager</label>
+            <select id="halleZuLager">
+                <option value=""></option>
+                <option>Hauptlager Nord (LGR-001)</option>
+                <option>Nebenlager West (LGR-002)</option>
+                <option>Außenlager Süd (LGR-003)</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Nutzfläche (m²)</label>
+            <input type="text" id="hallenFlaeche" placeholder="z. B. 600" />
+        </div>
+    </div>
+    <div class="grid-3">
+        <div class="field">
+            <label>Länge (m)</label>
+            <input type="text" id="hallenLaenge" placeholder="z. B. 40" />
+        </div>
+        <div class="field">
+            <label>Breite (m)</label>
+            <input type="text" id="hallenBreite" placeholder="z. B. 15" />
+        </div>
+        <div class="field">
+            <label>Deckenhöhe (m)</label>
+            <input type="text" id="hallenHoehe" placeholder="z. B. 8" />
+        </div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 4px; margin-bottom: 36px;">
+        <button class="btn btn-primary">Halle speichern</button>
+        <button class="btn">Zurücksetzen</button>
+    </div>
+
+    <!-- Lagerplatz anlegen -->
+    <p class="form-group-label">Lagerplatz anlegen</p>
+    <div class="grid-4">
+        <div class="field">
+            <label>Lager</label>
+            <select id="platzLager">
+                <option value=""></option>
+                <option>Hauptlager Nord (LGR-001)</option>
+                <option>Nebenlager West (LGR-002)</option>
+                <option>Außenlager Süd (LGR-003)</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Halle</label>
+            <select id="platzHalle">
+                <option value=""></option>
+                <option>H-01 – Halle Ost</option>
+                <option>H-02 – Halle West</option>
+                <option>H-03 – Halle Nord</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Regal</label>
+            <input type="text" id="platzRegal" placeholder="z. B. R03" />
+        </div>
+        <div class="field">
+            <label>Fach</label>
+            <input type="text" id="platzFach" placeholder="z. B. F05" />
+        </div>
+    </div>
+    <div class="grid-4">
+        <div class="field">
+            <label>Ebene</label>
+            <input type="text" id="platzEbene" placeholder="z. B. E02" />
+        </div>
+        <div class="field">
+            <label>Lagerplatz-Typ</label>
+            <select id="platzTyp">
+                <option>Standard</option>
+                <option>Hochregal</option>
+                <option>Bodenlager</option>
+                <option>Sperrlager</option>
+                <option>Gefahrgutlager</option>
+                <option>Kühlbereich</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Tragfähigkeit (kg)</label>
+            <input type="text" id="platzTragfaehigkeit" placeholder="z. B. 1500" />
+        </div>
+        <div class="field">
+            <label>Lagerplatz-ID (automatisch)</label>
+            <input type="text" id="platzId" readonly placeholder="LGR-001-H01-R03-F05-E02"
+                   style="background: var(--bg-secondary); color: var(--text-tertiary);" />
+        </div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 4px; margin-bottom: 36px;">
+        <button class="btn btn-primary">Lagerplatz speichern</button>
+        <button class="btn">Zurücksetzen</button>
+    </div>
+
+    <!-- Lagerplatz Generator -->
+    <p class="form-group-label">Lagerplatz Generator</p>
+    <div class="grid-4">
+        <div class="field">
+            <label>Lager</label>
+            <select id="genLager">
+                <option value=""></option>
+                <option>Hauptlager Nord (LGR-001)</option>
+                <option>Nebenlager West (LGR-002)</option>
+                <option>Außenlager Süd (LGR-003)</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Halle</label>
+            <select id="genHalle">
+                <option value=""></option>
+                <option value="H01">H-01 – Halle Ost</option>
+                <option value="H02">H-02 – Halle West</option>
+                <option value="H03">H-03 – Halle Nord</option>
+            </select>
+        </div>
+        <div class="field">
+            <label>Präfix</label>
+            <input type="text" id="genPraefix" placeholder="z. B. LGR-001-H01" />
+        </div>
+        <div class="field">
+            <label>Lagerplatz-Typ</label>
+            <select id="genTyp">
+                <option>Standard</option>
+                <option>Hochregal</option>
+                <option>Bodenlager</option>
+                <option>Sperrlager</option>
+                <option>Gefahrgutlager</option>
+                <option>Kühlbereich</option>
+            </select>
+        </div>
+    </div>
+    <div class="grid-3">
+        <div class="field">
+            <label>Regalanzahl</label>
+            <input type="text" id="genRegale" placeholder="z. B. 10" />
+        </div>
+        <div class="field">
+            <label>Fächer pro Regal</label>
+            <input type="text" id="genFaecher" placeholder="z. B. 8" />
+        </div>
+        <div class="field">
+            <label>Ebenen pro Fach</label>
+            <input type="text" id="genEbenen" placeholder="z. B. 4" />
+        </div>
+    </div>
+    <div class="field">
+        <label>Vorschau (generierte Lagerplatz-IDs)</label>
+        <div class="generator-preview" id="generatorVorschau">Einstellungen wählen und auf „Generieren" klicken…</div>
+    </div>
+    <div style="display: flex; gap: 8px; margin-top: 12px;">
+        <button class="btn btn-primary" id="btnGenerieren">Generieren</button>
+        <button class="btn" id="btnUebernehmen" disabled>Alle übernehmen</button>
+        <button class="btn" id="btnGeneratorReset">Zurücksetzen</button>
+    </div>
+
+</section>
+</main>
+<script>
+(function() {
+    const pad = (n, len) => String(n).padStart(len, '0');
+
+    document.getElementById('btnGenerieren').addEventListener('click', () => {
+        const praefix = document.getElementById('genPraefix').value.trim() || 'LGR';
+        const regale = parseInt(document.getElementById('genRegale').value) || 0;
+        const faecher = parseInt(document.getElementById('genFaecher').value) || 0;
+        const ebenen = parseInt(document.getElementById('genEbenen').value) || 0;
+
+        if (!regale || !faecher || !ebenen) {
+            document.getElementById('generatorVorschau').textContent = 'Bitte Regalanzahl, Fächer und Ebenen angeben.';
+            return;
+        }
+
+        const ids = [];
+        for (let r = 1; r <= regale; r++) {
+            for (let f = 1; f <= faecher; f++) {
+                for (let e = 1; e <= ebenen; e++) {
+                    ids.push(`${praefix}-R${pad(r,2)}-F${pad(f,2)}-E${pad(e,2)}`);
+                }
+            }
+        }
+
+        document.getElementById('generatorVorschau').textContent =
+            `${ids.length} Lagerplätze generiert:\n\n` + ids.join('\n');
+        document.getElementById('btnUebernehmen').disabled = false;
+    });
+
+    document.getElementById('btnGeneratorReset').addEventListener('click', () => {
+        ['genLager','genHalle','genPraefix','genRegale','genFaecher','genEbenen'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el.tagName === 'SELECT') el.selectedIndex = 0;
+            else el.value = '';
+        });
+        document.getElementById('generatorVorschau').textContent = 'Einstellungen wählen und auf „Generieren" klicken…';
+        document.getElementById('btnUebernehmen').disabled = true;
+    });
+})();
+</script>
+</body>
+</html>

@@ -105,10 +105,10 @@ const sidebarConfig = {
     sections: [{
       label: 'Artikelverwaltung',
       items: [
-        { label: 'Neuen Artikel anlegen', icon: _i('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'), active: true },
-        { label: 'Artikeldatenbank',      icon: _i('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>') },
-        { label: 'Lager & Standorte',     icon: _i('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>') },
-        { label: 'Artikelbewegung',       icon: _i('<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>') },
+        { label: 'Neuen Artikel anlegen', icon: _i('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'), active: true, page: 'sites/Artikel.html' },
+        { label: 'Artikeldatenbank',      icon: _i('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'), page: 'sites/Artikeldatenbank.html' },
+        { label: 'Lager & Standorte',     icon: _i('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>'), page: 'sites/LagerStandorte.html' },
+        { label: 'Artikelbewegung',       icon: _i('<polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>'), page: 'sites/Artikelbewegung.html' },
       ]
     }]
   },
@@ -167,18 +167,32 @@ function renderSidebar(src) {
   nav.innerHTML = config.sections.map((section, i) => `
     <span class="sidebar-section-label"${i > 0 ? ' style="margin-top:16px"' : ''}>${section.label}</span>
     ${section.items.map(item => `
-      <a href="#" class="sidebar-item${item.active ? ' active' : ''}">
+      <a href="#" class="sidebar-item${item.active ? ' active' : ''}"${item.page ? ` data-page="${item.page}"` : ''}>
         ${item.icon} ${item.label}
       </a>
     `).join('')}
   `).join('');
 
   nav.querySelectorAll('.sidebar-item').forEach(item => {
-    item.addEventListener('click', () => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
       if (window.innerWidth <= 768) {
         document.querySelector('.sidebar')?.classList.remove('open');
         document.getElementById('sidebarOverlay')?.classList.remove('active');
       }
+      const page = item.getAttribute('data-page');
+      if (!page) return;
+      const mainContent = document.querySelector('.main-content');
+      if (!mainContent) return;
+      fetch(page)
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const main = doc.querySelector('main');
+          mainContent.innerHTML = main ? main.innerHTML : '';
+        });
+      nav.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
     });
   });
 }
