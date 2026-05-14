@@ -902,4 +902,27 @@ input[type="range"]::-moz-range-thumb {
   .container { padding: 16px 14px 60px; }
   .grid-3 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
+  .toptitle { font-size: 0; }
+  .toptitle::before { content: 'ADL'; font-size: 15px; }
+}
+
+/* ==========================================================================
+   Responsive: ≤ 400px — Theme-Toggle als schwebender Button
+   ========================================================================== */
+
+@media (max-width: 400px) {
+  .topbar { backdrop-filter: none; }
+
+  .theme-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 20px;
+    z-index: 20;
+    padding: 10px 14px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15), 0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  [data-theme="dark"] .theme-toggle {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 1px 4px rgba(0, 0, 0, 0.3);
+  }
 }
