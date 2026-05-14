@@ -733,15 +733,15 @@ input[type="range"]::-moz-range-thumb {
 .main-layout {
   display: flex;
   align-items: flex-start;
-  min-height: calc(100vh - 77px);
+  min-height: calc(100vh - var(--topbar-h, 77px));
 }
 
 .sidebar {
   width: 220px;
   flex-shrink: 0;
   position: sticky;
-  top: 77px;
-  height: calc(100vh - 77px);
+  top: var(--topbar-h, 77px);
+  height: calc(100vh - var(--topbar-h, 77px));
   overflow-y: auto;
   background: var(--bg-primary);
   border-right: 0.5px solid var(--border-subtle);

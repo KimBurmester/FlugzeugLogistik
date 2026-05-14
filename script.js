@@ -11,6 +11,21 @@
   document.documentElement.setAttribute('data-theme', initial);
 })();
 
+/* ==========================================================================
+   Topbar-Höhe als CSS-Variable setzen (behebt Sticky-Gap der Sidebar)
+   ========================================================================== */
+
+(function syncTopbarHeight() {
+  function update() {
+    const topbar = document.querySelector('.topbar');
+    if (topbar) {
+      document.documentElement.style.setProperty('--topbar-h', topbar.offsetHeight + 'px');
+    }
+  }
+  update();
+  window.addEventListener('resize', update);
+})();
+
 const themeToggle = document.getElementById('themeToggle');
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
