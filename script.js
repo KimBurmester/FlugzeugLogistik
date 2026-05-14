@@ -19,7 +19,7 @@
   function update() {
     const topbar = document.querySelector('.topbar');
     if (topbar) {
-      document.documentElement.style.setProperty('--topbar-h', topbar.offsetHeight + 'px');
+      document.documentElement.style.setProperty('--topbar-h', topbar.getBoundingClientRect().height + 'px');
     }
   }
   update();
