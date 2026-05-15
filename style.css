@@ -1185,20 +1185,14 @@ input[readonly] {
 }
 
 /* ==========================================================================
-   Responsive: ≤ 1280px — Grids auf eine Spalte
+   Responsive: ≤ 1280px — Grids + kompakte Topbar
    ========================================================================== */
 
 @media (max-width: 1280px) {
   .grid-2 { grid-template-columns: 1fr; }
   .grid-3 { grid-template-columns: 1fr; }
   .grid-4 { grid-template-columns: 1fr; }
-}
 
-/* ==========================================================================
-   Responsive: ≤ 1030px — kurze Tab-Labels, kompaktere Topbar
-   ========================================================================== */
-
-@media (max-width: 1030px) {
   .topbar { padding: 14px 16px; }
   .topbar-content { gap: 16px; }
   .theme-label { display: none; }
