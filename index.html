@@ -536,6 +536,202 @@
 </div>
 <!-- ===== /Modal: Neuer Prüfbericht ===== -->
 
+<!-- ===== Modal: Bestellung – Position hinzufügen ===== -->
+<div class="modal-overlay" id="modalBestellungPosition" role="dialog" aria-modal="true" aria-labelledby="modalBestellungPositionTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalBestellungPositionTitle">Position hinzufügen</h3>
+      <button class="modal-close" id="modalBestellungPositionClose" aria-label="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="grid-4">
+        <div class="field"><label>Artikelnummer</label><input type="text" id="bp-artikelnummer" placeholder="z. B. 239324875" /></div>
+        <div class="field"><label>Bezeichnung</label><input type="text" id="bp-bezeichnung" placeholder="z. B. Hydraulikschlauch DN16" /></div>
+        <div class="field"><label>Menge</label><input type="number" id="bp-menge" placeholder="0" min="1" /></div>
+        <div class="field"><label>Einheit</label>
+          <select id="bp-einheit">
+            <option value=""></option>
+            <option>Stück</option>
+            <option>Liter</option>
+            <option>Meter</option>
+            <option>Kilogramm</option>
+            <option>Rolle</option>
+            <option>Paket</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-4">
+        <div class="field"><label>Einzelpreis (€)</label><input type="number" id="bp-einzelpreis" placeholder="0,00" step="0.01" min="0" /></div>
+        <div class="field"><label>Lagerort</label><input type="text" id="bp-lagerort" placeholder="z. B. Halle 1 / Regal A3" /></div>
+        <div class="field"><label>Lieferdatum (Position)</label><input type="date" id="bp-lieferdatum" /></div>
+        <div class="field"><label>Bemerkung</label><input type="text" id="bp-bemerkung" placeholder="Optional" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="modalBestellungPositionSave">Hinzufügen</button>
+      <button class="btn" id="modalBestellungPositionCancel">Abbrechen</button>
+    </div>
+  </div>
+</div>
+<!-- ===== /Modal: Bestellung – Position hinzufügen ===== -->
+
+<!-- ===== Modal: Neuer Lieferant ===== -->
+<div class="modal-overlay" id="modalNeuerLieferant" role="dialog" aria-modal="true" aria-labelledby="modalNeuerLieferantTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalNeuerLieferantTitle">Neuen Lieferanten anlegen</h3>
+      <button class="modal-close" id="modalNeuerLieferantClose" aria-label="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <p class="form-group-label">Stammdaten</p>
+      <div class="grid-4">
+        <div class="field"><label>Firmenname</label><input type="text" id="lf-firmenname" placeholder="z. B. Bosch Rexroth AG" /></div>
+        <div class="field"><label>Lieferantennr.</label><input type="text" id="lf-lieferantennr" placeholder="z. B. LFR-0049" /></div>
+        <div class="field"><label>Warengruppe</label>
+          <select id="lf-warengruppe">
+            <option value=""></option>
+            <option>Hydraulik</option>
+            <option>Pneumatik</option>
+            <option>Elektronik</option>
+            <option>Mechanik</option>
+            <option>Verbrauchsmaterial</option>
+          </select>
+        </div>
+        <div class="field"><label>Status</label>
+          <select id="lf-status">
+            <option value=""></option>
+            <option>Aktiv</option>
+            <option>In Prüfung</option>
+            <option>Gesperrt</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="form-group-label">Kontakt</p>
+      <div class="grid-4">
+        <div class="field"><label>Kontaktperson</label><input type="text" id="lf-kontaktperson" placeholder="z. B. H. Meier" /></div>
+        <div class="field"><label>E-Mail</label><input type="email" id="lf-email" placeholder="kontakt@beispiel.de" /></div>
+        <div class="field"><label>Telefon</label><input type="text" id="lf-telefon" placeholder="+49 9352 18-0" /></div>
+        <div class="field"><label>Website</label><input type="text" id="lf-website" placeholder="www.beispiel.de" /></div>
+      </div>
+
+      <p class="form-group-label">Adresse</p>
+      <div class="grid-4">
+        <div class="field"><label>Straße &amp; Nr.</label><input type="text" id="lf-strasse" placeholder="z. B. Industriestr. 1" /></div>
+        <div class="field"><label>PLZ</label><input type="text" id="lf-plz" placeholder="z. B. 97816" /></div>
+        <div class="field"><label>Ort</label><input type="text" id="lf-ort" placeholder="z. B. Lohr am Main" /></div>
+        <div class="field"><label>Land</label>
+          <select id="lf-land">
+            <option value=""></option>
+            <option>Deutschland</option>
+            <option>Österreich</option>
+            <option>Schweiz</option>
+            <option>Sonstige</option>
+          </select>
+        </div>
+      </div>
+
+      <p class="form-group-label">Konditionen</p>
+      <div class="grid-4">
+        <div class="field"><label>Zahlungsziel (Tage)</label><input type="number" id="lf-zahlungsziel" placeholder="30" min="0" /></div>
+        <div class="field"><label>Skonto (%)</label><input type="number" id="lf-skonto" placeholder="2" step="0.1" min="0" /></div>
+        <div class="field"><label>Währung</label>
+          <select id="lf-waehrung">
+            <option value=""></option>
+            <option>EUR</option>
+            <option>USD</option>
+            <option>CHF</option>
+            <option>GBP</option>
+          </select>
+        </div>
+        <div class="field"><label>Mindestbestellwert (€)</label><input type="number" id="lf-mindestbestellwert" placeholder="0,00" step="0.01" min="0" /></div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="modalNeuerLieferantSave">Speichern</button>
+      <button class="btn" id="modalNeuerLieferantCancel">Abbrechen</button>
+    </div>
+  </div>
+</div>
+<!-- ===== /Modal: Neuer Lieferant ===== -->
+
+<!-- ===== Modal: Wareneingang erfassen ===== -->
+<div class="modal-overlay" id="modalWareneingang" role="dialog" aria-modal="true" aria-labelledby="modalWareneingangTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="modalWareneingangTitle">Wareneingang erfassen</h3>
+      <button class="modal-close" id="modalWareneingangClose" aria-label="Schließen">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <p class="form-group-label">Referenz</p>
+      <div class="grid-4">
+        <div class="field"><label>Bestellnr.</label>
+          <select id="we-bestellnr">
+            <option value=""></option>
+            <option>BST-2026-0001</option>
+            <option>BST-2026-0002</option>
+            <option>BST-2026-0003</option>
+            <option>BST-2026-0004</option>
+            <option>BST-2026-0005</option>
+            <option>BST-2026-0006</option>
+            <option>BST-2026-0007</option>
+            <option>BST-2026-0008</option>
+          </select>
+        </div>
+        <div class="field"><label>Lieferant</label><input type="text" id="we-lieferant" placeholder="z. B. Bosch Rexroth AG" /></div>
+        <div class="field"><label>Lieferschein-Nr.</label><input type="text" id="we-lieferschein" placeholder="z. B. LS-BR-260050" /></div>
+        <div class="field"><label>Eingangsdatum</label><input type="date" id="we-datum" /></div>
+      </div>
+
+      <p class="form-group-label">Warenposition</p>
+      <div class="grid-4">
+        <div class="field"><label>Artikel / Bezeichnung</label><input type="text" id="we-artikel" placeholder="z. B. Hydraulikschlauch DN16" /></div>
+        <div class="field"><label>Bestellte Menge</label><input type="number" id="we-menge-bestellt" placeholder="0" min="0" /></div>
+        <div class="field"><label>Gelieferte Menge</label><input type="number" id="we-menge-geliefert" placeholder="0" min="0" /></div>
+        <div class="field"><label>Einheit</label>
+          <select id="we-einheit">
+            <option value=""></option>
+            <option>Stück</option>
+            <option>Liter</option>
+            <option>Meter</option>
+            <option>Kilogramm</option>
+            <option>Rolle</option>
+          </select>
+        </div>
+      </div>
+      <div class="grid-4">
+        <div class="field"><label>Lagerort</label><input type="text" id="we-lagerort" placeholder="z. B. Halle 2 / Regal B1" /></div>
+        <div class="field"><label>Chargen-/Seriennr.</label><input type="text" id="we-charge" placeholder="Optional" /></div>
+        <div class="field"><label>Prüfstatus</label>
+          <select id="we-pruefstatus">
+            <option value=""></option>
+            <option>Erwartet</option>
+            <option>In Prüfung</option>
+            <option>Abgeschlossen (i.O.)</option>
+            <option>Abgelehnt (n.i.O.)</option>
+          </select>
+        </div>
+        <div class="field"><label>Bemerkung</label><input type="text" id="we-bemerkung" placeholder="Optional" /></div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="modalWareneingangSave">Speichern</button>
+      <button class="btn" id="modalWareneingangCancel">Abbrechen</button>
+    </div>
+  </div>
+</div>
+<!-- ===== /Modal: Wareneingang erfassen ===== -->
+
 </body>
 <script src="script.js"></script>
 </html>

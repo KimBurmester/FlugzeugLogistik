@@ -80,6 +80,13 @@ document.querySelectorAll('.segmented').forEach(group => {
 
 const _i = p => `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 
+const _bvSidebar = active => [
+  { label: 'Neue Bestellung',      icon: _i('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'),                                                                                                         ...(active === 'bestellung'     ? { active: true } : { page: 'sites/Bestellung.html' }) },
+  { label: 'Bestelldatenbank',     icon: _i('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'), ...(active === 'datenbank'      ? { active: true } : { page: 'sites/Bestelldatenbank.html' }) },
+  { label: 'Lieferantenübersicht', icon: _i('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>'),                     ...(active === 'lieferanten'    ? { active: true } : { page: 'sites/Lieferanten.html' }) },
+  { label: 'Wareneingänge',        icon: _i('<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>'),              ...(active === 'wareneingaenge' ? { active: true } : { page: 'sites/Wareneingaenge.html' }) },
+];
+
 const _pvSidebar = active => [
   { label: 'Neuer Produktionsauftrag', icon: _i('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'),                                                                                                         ...(active === 'produktion'  ? { active: true } : { page: 'sites/Produktion.html' }) },
   { label: 'Produktionsdatenbank',     icon: _i('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>'), ...(active === 'datenbank'   ? { active: true } : { page: 'sites/Produktionsdatenbank.html' }) },
@@ -143,17 +150,10 @@ const sidebarConfig = {
   'sites/Produktionsplan.html':     { sections: [{ label: 'Produktionsverwaltung', items: _pvSidebar('plan')        }] },
   'sites/Qualitaetssicherung.html': { sections: [{ label: 'Produktionsverwaltung', items: _pvSidebar('qs')          }] },
   'sites/Stueckliste.html':         { sections: [{ label: 'Produktionsverwaltung', items: _pvSidebar('stueckliste') }] },
-  'sites/Bestellung.html': {
-    sections: [{
-      label: 'Bestellverwaltung',
-      items: [
-        { label: 'Neue Bestellung',      icon: _i('<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>'), active: true },
-        { label: 'Bestelldatenbank',     icon: _i('<line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/>') },
-        { label: 'Lieferantenübersicht', icon: _i('<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>') },
-        { label: 'Wareneingänge',        icon: _i('<rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>') },
-      ]
-    }]
-  },
+  'sites/Bestellung.html':        { sections: [{ label: 'Bestellverwaltung', items: _bvSidebar('bestellung')     }] },
+  'sites/Bestelldatenbank.html':  { sections: [{ label: 'Bestellverwaltung', items: _bvSidebar('datenbank')      }] },
+  'sites/Lieferanten.html':       { sections: [{ label: 'Bestellverwaltung', items: _bvSidebar('lieferanten')    }] },
+  'sites/Wareneingaenge.html':    { sections: [{ label: 'Bestellverwaltung', items: _bvSidebar('wareneingaenge') }] },
   'sites/Instandhaltung.html': {
     sections: [{
       label: 'Instandhaltung',
@@ -540,6 +540,153 @@ document.querySelectorAll('.chip-x').forEach(x => {
   });
 
   document.getElementById('modalNeuerPruefberichtSave')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) { closeModal(); resetModal(); }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) { closeModal(); resetModal(); }
+  });
+})();
+
+/* ==========================================================================
+   Modal: Bestellung – Position hinzufügen
+   ========================================================================== */
+
+(function initModalBestellungPosition() {
+  const overlay = document.getElementById('modalBestellungPosition');
+  if (!overlay) return;
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('input, select, textarea')?.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function resetModal() {
+    overlay.querySelectorAll('input, textarea').forEach(el => (el.value = ''));
+    overlay.querySelectorAll('select').forEach(el => (el.selectedIndex = 0));
+  }
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-action="bestellung-position"]')) openModal();
+  });
+
+  document.getElementById('modalBestellungPositionClose')?.addEventListener('click', closeModal);
+
+  document.getElementById('modalBestellungPositionCancel')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  document.getElementById('modalBestellungPositionSave')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) { closeModal(); resetModal(); }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) { closeModal(); resetModal(); }
+  });
+})();
+
+/* ==========================================================================
+   Modal: Neuer Lieferant
+   ========================================================================== */
+
+(function initModalNeuerLieferant() {
+  const overlay = document.getElementById('modalNeuerLieferant');
+  if (!overlay) return;
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('input, select, textarea')?.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function resetModal() {
+    overlay.querySelectorAll('input, textarea').forEach(el => (el.value = ''));
+    overlay.querySelectorAll('select').forEach(el => (el.selectedIndex = 0));
+  }
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-action="neuer-lieferant"]')) openModal();
+  });
+
+  document.getElementById('modalNeuerLieferantClose')?.addEventListener('click', closeModal);
+
+  document.getElementById('modalNeuerLieferantCancel')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  document.getElementById('modalNeuerLieferantSave')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) { closeModal(); resetModal(); }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) { closeModal(); resetModal(); }
+  });
+})();
+
+/* ==========================================================================
+   Modal: Wareneingang erfassen
+   ========================================================================== */
+
+(function initModalWareneingang() {
+  const overlay = document.getElementById('modalWareneingang');
+  if (!overlay) return;
+
+  function openModal() {
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    overlay.querySelector('input, select, textarea')?.focus();
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  function resetModal() {
+    overlay.querySelectorAll('input, textarea').forEach(el => (el.value = ''));
+    overlay.querySelectorAll('select').forEach(el => (el.selectedIndex = 0));
+  }
+
+  document.addEventListener('click', e => {
+    if (e.target.closest('[data-action="wareneingang-erfassen"]')) openModal();
+  });
+
+  document.getElementById('modalWareneingangClose')?.addEventListener('click', closeModal);
+
+  document.getElementById('modalWareneingangCancel')?.addEventListener('click', () => {
+    closeModal();
+    resetModal();
+  });
+
+  document.getElementById('modalWareneingangSave')?.addEventListener('click', () => {
     closeModal();
     resetModal();
   });
