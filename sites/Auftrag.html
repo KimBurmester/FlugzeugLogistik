@@ -10,400 +10,83 @@
 <body>
 <main>
 <section class="container">
-    <h2 class="section-title">Auftragsverwaltung</h2>
+    <h2 class="section-title">Stammdaten des Auftrags</h2>
 
-    <!-- Stammdaten -->
-    <p class="form-group-label">Stammdaten</p>
+    <!-- Allgemeine Auftragsdaten -->
+    <p class="form-group-label">Allgemeine Auftragsdaten</p>
     <div class="grid-4">
         <div class="field">
-            <label>Artikelbezeichnung</label>
-            <input type="text" id="artikelbezeichnung" placeholder="z. B. Hydraulikschlauch" />
+            <label>Auftragsnummer</label>
+            <input type="text" id="auftragsnummer" placeholder="z. B. AUF-2026-0001" />
         </div>
         <div class="field">
-            <label>Artikelnummer</label>
-            <input type="text" id="artikelnummer" placeholder="z. B. 239324875" />
+            <label>Projektnummer</label>
+            <input type="text" id="projektnummer" placeholder="z. B. PRJ-2026-042" />
         </div>
         <div class="field">
-            <label>Warengruppe</label>
-            <select>
-                <option>Hydraulik</option>
-                <option>Elektronik</option>
-                <option>Mechanik</option>
-                <option>Verbrauchsmaterial</option>
-            </select>
+            <label>Kunde / Auftraggeber</label>
+            <input type="text" id="kunde" placeholder="z. B. Lufthansa Technik AG" />
         </div>
         <div class="field">
-            <label>Artikelstatus</label>
-            <select>
-                <option>Aktiv</option>
-                <option>Gesperrt</option>
-                <option>Ausgelaufen</option>
+            <label>Auftragstyp</label>
+            <select id="auftragstyp">
+                <option value=""></option>
+                <option>Produktion</option>
+                <option>Materialbestellung</option>
+                <option>Transportauftrag</option>
+                <option>Wartung</option>
+                <option>Reparatur</option>
             </select>
         </div>
     </div>
     <div class="grid-4">
         <div class="field">
-            <label>Einheit</label>
-            <select>
-                <option>Stück</option>
-                <option>Liter</option>
-                <option>Meter</option>
-                <option>Kilogramm</option>
+            <label>Priorität</label>
+            <select id="prioritaet">
+                <option value=""></option>
+                <option>Niedrig</option>
+                <option>Normal</option>
+                <option>Hoch</option>
+                <option>Kritisch</option>
             </select>
         </div>
         <div class="field">
-            <label>Chargennummer</label>
-            <input type="text" id="charge" />
+            <label>Status</label>
+            <select id="status">
+                <option value=""></option>
+                <option>Neu</option>
+                <option>Offen</option>
+                <option>In Bearbeitung</option>
+                <option>Abgeschlossen</option>
+                <option>Storniert</option>
+            </select>
         </div>
         <div class="field">
-            <label>Seriennummer (SN)</label>
-            <input type="text" id="seriennummer" />
+            <label>Erstellungsdatum</label>
+            <input type="date" id="erstellungsdatum" />
         </div>
         <div class="field">
-            <label>Maschinennummer (MSN)</label>
-            <input type="text" id="maschinennummer" />
+            <label>Änderungsdatum</label>
+            <input type="date" id="aenderungsdatum" />
         </div>
     </div>
-
-    <!-- Lagerbestand -->
-    <p class="form-group-label">Lagerbestand</p>
     <div class="grid-4">
         <div class="field">
-            <label>Aktueller Bestand</label>
-            <input type="text" id="bestand" />
+            <label>Verantwortlicher Mitarbeiter</label>
+            <input type="text" id="mitarbeiter" placeholder="z. B. K. Burmester" />
         </div>
         <div class="field">
-            <label>Mindestbestand</label>
-            <input type="text" id="mindestbestand" />
+            <label>Kostenstelle</label>
+            <input type="text" id="kostenstelle" placeholder="z. B. KST-4710" />
         </div>
         <div class="field">
-            <label>Meldebestand</label>
-            <input type="text" id="meldebestand" />
+            <label>Werk / Standort</label>
+            <input type="text" id="werk" placeholder="z. B. Werk Hamburg-Nord" />
         </div>
         <div class="field">
-            <label>Lagerort</label>
-            <input type="text" id="lagerort" placeholder="Halle / Regal / Fach" />
+            <label>Halle / Bahnhof / Fach</label>
+            <input type="text" id="halle" placeholder="z. B. Halle 2 / Gleis 4 / F03" />
         </div>
-    </div>
-
-    <!-- Abmessungen & Verpackung -->
-    <p class="form-group-label">Abmessungen & Verpackung</p>
-    <div class="grid-4">
-        <div class="field">
-            <label>Länge (cm)</label>
-            <input type="text" id="laenge" />
-        </div>
-        <div class="field">
-            <label>Breite (cm)</label>
-            <input type="text" id="breite" />
-        </div>
-        <div class="field">
-            <label>Höhe (cm)</label>
-            <input type="text" id="hoehe" />
-        </div>
-        <div class="field">
-            <label>Gewicht (kg)</label>
-            <input type="text" id="gewicht" />
-        </div>
-    </div>
-    <div class="grid-2">
-        <div class="field">
-            <label>Verpackungseinheit</label>
-            <select id="verpackungseinheit">
-                <option>Stück</option>
-                <option>Karton</option>
-                <option>Palette</option>
-                <option>Euro-Palette</option>
-                <option>Container</option>
-                <option>Box</option>
-                <option>Beutel</option>
-                <option>Rolle</option>
-                <option>Fass</option>
-                <option>Kiste</option>
-                <option>Tray</option>
-                <option>Big Bag</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Menge pro Einheit</label>
-            <input type="text" id="mengeProEinheit" />
-        </div>
-    </div>
-
-    <!-- Einkauf -->
-    <p class="form-group-label">Einkauf</p>
-    <div class="grid-3">
-        <div class="field">
-            <label>Lieferant</label>
-            <select id="lieferant">
-                <option></option>
-                <option>Bosch Rexroth AG</option>
-                <option>WAGO Kontakttechnik GmbH &amp; Co. KG</option>
-                <option>Robert Bosch GmbH</option>
-                <option>Siemens AG</option>
-                <option>thyssenkrupp AG</option>
-                <option>Festo SE &amp; Co. KG</option>
-                <option>Parker Hannifin GmbH</option>
-                <option>Hydac International GmbH</option>
-                <option>ifm electronic gmbh</option>
-                <option>Balluff GmbH</option>
-                <option>SICK AG</option>
-                <option>Würth Industrie Service GmbH &amp; Co. KG</option>
-                <option>Continental AG</option>
-                <option>ZF Friedrichshafen AG</option>
-                <option>MAN Truck &amp; Bus SE</option>
-                <option>Trumpf GmbH + Co. KG</option>
-                <option>Rittal GmbH &amp; Co. KG</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Einkaufspreis (€)</label>
-            <input type="text" id="einkaufspreis" />
-        </div>
-        <div class="field">
-            <label>Mindestbestellmenge</label>
-            <input type="text" id="mindestbestellmenge" />
-        </div>
-    </div>
-
-    <!-- Verkauf -->
-    <p class="form-group-label">Verkauf</p>
-    <div class="grid-3">
-        <div class="field">
-            <label>Verkaufspreis (€)</label>
-            <input type="text" id="verkaufspreis" />
-        </div>
-        <div class="field">
-            <label>Steuersatz</label>
-            <select>
-                <option>19 %</option>
-                <option>7 %</option>
-                <option>0 %</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Zolltarifnummer</label>
-            <input type="text" id="zolltarifnummer" />
-        </div>
-    </div>
-
-    <!-- Versand & Klassifikation -->
-    <p class="form-group-label">Versand &amp; Klassifikation</p>
-    <div class="grid-3">
-        <div class="field">
-            <label>Gefahrgut</label>
-            <select>
-                <option>Nein</option>
-                <option>Ja</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Herkunftsland</label>
-            <select>
-                <option>Afghanistan</option>
-                <option>Ägypten</option>
-                <option>Albanien</option>
-                <option>Algerien</option>
-                <option>Andorra</option>
-                <option>Angola</option>
-                <option>Antigua und Barbuda</option>
-                <option>Äquatorialguinea</option>
-                <option>Argentinien</option>
-                <option>Armenien</option>
-                <option>Aserbaidschan</option>
-                <option>Äthiopien</option>
-                <option>Australien</option>
-                <option>Bahamas</option>
-                <option>Bahrain</option>
-                <option>Bangladesch</option>
-                <option>Barbados</option>
-                <option>Belgien</option>
-                <option>Belize</option>
-                <option>Benin</option>
-                <option>Bhutan</option>
-                <option>Bolivien</option>
-                <option>Bosnien und Herzegowina</option>
-                <option>Botsuana</option>
-                <option>Brasilien</option>
-                <option>Brunei</option>
-                <option>Bulgarien</option>
-                <option>Burkina Faso</option>
-                <option>Burundi</option>
-                <option>Chile</option>
-                <option>China</option>
-                <option>Costa Rica</option>
-                <option>Dänemark</option>
-                <option selected>Deutschland</option>
-                <option>Dominica</option>
-                <option>Dominikanische Republik</option>
-                <option>Dschibuti</option>
-                <option>Ecuador</option>
-                <option>El Salvador</option>
-                <option>Elfenbeinküste</option>
-                <option>Eritrea</option>
-                <option>Estland</option>
-                <option>Eswatini</option>
-                <option>Fidschi</option>
-                <option>Finnland</option>
-                <option>Frankreich</option>
-                <option>Gabun</option>
-                <option>Gambia</option>
-                <option>Georgien</option>
-                <option>Ghana</option>
-                <option>Grenada</option>
-                <option>Griechenland</option>
-                <option>Guatemala</option>
-                <option>Guinea</option>
-                <option>Guinea-Bissau</option>
-                <option>Guyana</option>
-                <option>Haiti</option>
-                <option>Honduras</option>
-                <option>Indien</option>
-                <option>Indonesien</option>
-                <option>Irak</option>
-                <option>Iran</option>
-                <option>Irland</option>
-                <option>Island</option>
-                <option>Israel</option>
-                <option>Italien</option>
-                <option>Jamaika</option>
-                <option>Japan</option>
-                <option>Jemen</option>
-                <option>Jordanien</option>
-                <option>Kambodscha</option>
-                <option>Kamerun</option>
-                <option>Kanada</option>
-                <option>Kap Verde</option>
-                <option>Kasachstan</option>
-                <option>Katar</option>
-                <option>Kenia</option>
-                <option>Kirgisistan</option>
-                <option>Kiribati</option>
-                <option>Kolumbien</option>
-                <option>Komoren</option>
-                <option>Kongo</option>
-                <option>Kongo (Demokratische Republik)</option>
-                <option>Kroatien</option>
-                <option>Kuba</option>
-                <option>Kuwait</option>
-                <option>Laos</option>
-                <option>Lesotho</option>
-                <option>Lettland</option>
-                <option>Libanon</option>
-                <option>Liberia</option>
-                <option>Libyen</option>
-                <option>Liechtenstein</option>
-                <option>Litauen</option>
-                <option>Luxemburg</option>
-                <option>Madagaskar</option>
-                <option>Malawi</option>
-                <option>Malaysia</option>
-                <option>Malediven</option>
-                <option>Mali</option>
-                <option>Malta</option>
-                <option>Marokko</option>
-                <option>Marshallinseln</option>
-                <option>Mauretanien</option>
-                <option>Mauritius</option>
-                <option>Mexiko</option>
-                <option>Mikronesien</option>
-                <option>Moldau</option>
-                <option>Monaco</option>
-                <option>Mongolei</option>
-                <option>Montenegro</option>
-                <option>Mosambik</option>
-                <option>Myanmar</option>
-                <option>Namibia</option>
-                <option>Nauru</option>
-                <option>Nepal</option>
-                <option>Neuseeland</option>
-                <option>Nicaragua</option>
-                <option>Niederlande</option>
-                <option>Niger</option>
-                <option>Nigeria</option>
-                <option>Nordkorea</option>
-                <option>Nordmazedonien</option>
-                <option>Norwegen</option>
-                <option>Oman</option>
-                <option>Österreich</option>
-                <option>Pakistan</option>
-                <option>Palau</option>
-                <option>Panama</option>
-                <option>Papua-Neuguinea</option>
-                <option>Paraguay</option>
-                <option>Peru</option>
-                <option>Philippinen</option>
-                <option>Polen</option>
-                <option>Portugal</option>
-                <option>Ruanda</option>
-                <option>Rumänien</option>
-                <option>Russland</option>
-                <option>Salomonen</option>
-                <option>Sambia</option>
-                <option>Samoa</option>
-                <option>San Marino</option>
-                <option>São Tomé und Príncipe</option>
-                <option>Saudi-Arabien</option>
-                <option>Schweden</option>
-                <option>Schweiz</option>
-                <option>Senegal</option>
-                <option>Serbien</option>
-                <option>Seychellen</option>
-                <option>Sierra Leone</option>
-                <option>Simbabwe</option>
-                <option>Singapur</option>
-                <option>Slowakei</option>
-                <option>Slowenien</option>
-                <option>Somalia</option>
-                <option>Spanien</option>
-                <option>Sri Lanka</option>
-                <option>Südafrika</option>
-                <option>Südkorea</option>
-                <option>Südsudan</option>
-                <option>Sudan</option>
-                <option>Suriname</option>
-                <option>Syrien</option>
-                <option>Tadschikistan</option>
-                <option>Tansania</option>
-                <option>Thailand</option>
-                <option>Timor-Leste</option>
-                <option>Togo</option>
-                <option>Tonga</option>
-                <option>Trinidad und Tobago</option>
-                <option>Tschad</option>
-                <option>Tschechien</option>
-                <option>Tunesien</option>
-                <option>Türkei</option>
-                <option>Turkmenistan</option>
-                <option>Tuvalu</option>
-                <option>Uganda</option>
-                <option>Ukraine</option>
-                <option>Ungarn</option>
-                <option>Uruguay</option>
-                <option>USA</option>
-                <option>Usbekistan</option>
-                <option>Vanuatu</option>
-                <option>Vatikanstadt</option>
-                <option>Venezuela</option>
-                <option>Vereinigte Arabische Emirate</option>
-                <option>Vereinigtes Königreich</option>
-                <option>Vietnam</option>
-                <option>Weißrussland</option>
-                <option>Zentralafrikanische Republik</option>
-                <option>Zypern</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Barcode (EAN)</label>
-            <input type="text" id="barcode" />
-        </div>
-    </div>
-
-    <!-- Beschreibung -->
-    <p class="form-group-label">Beschreibung</p>
-    <div class="field">
-        <label>Beschreibung</label>
-        <textarea rows="4" id="beschreibung" placeholder="Optionale Beschreibung des Artikels..."></textarea>
     </div>
 
     <!-- Buttons -->
@@ -414,5 +97,4 @@
 </section>
 </main>
 </body>
-<script src="script.js"></script>
 </html>
