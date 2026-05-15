@@ -989,6 +989,7 @@ input[type="range"]::-moz-range-thumb {
 }
 
 .page-header .section-title { margin: 0; }
+.page-header .form-group-label { margin: 0; }
 
 /* ==========================================================================
    Generator preview
