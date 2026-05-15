@@ -1185,6 +1185,16 @@ input[readonly] {
 }
 
 /* ==========================================================================
+   Responsive: ≤ 1130px — Grids auf eine Spalte
+   ========================================================================== */
+
+@media (max-width: 1130px) {
+  .grid-2 { grid-template-columns: 1fr; }
+  .grid-3 { grid-template-columns: 1fr; }
+  .grid-4 { grid-template-columns: 1fr; }
+}
+
+/* ==========================================================================
    Responsive: ≤ 1030px — kurze Tab-Labels, kompaktere Topbar
    ========================================================================== */
 
