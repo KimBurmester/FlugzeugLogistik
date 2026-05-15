@@ -67,6 +67,13 @@
 
   --transition-fast: 0.12s ease;
   --transition-base: 0.18s ease;
+
+  /* Scrollbar */
+  --scrollbar-width: 6px;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(0, 0, 0, 0.18);
+  --scrollbar-thumb-hover: rgba(0, 0, 0, 0.35);
+  --scrollbar-radius: 999px;
 }
 
 [data-theme="dark"] {
@@ -121,6 +128,10 @@
   --coral-text: #f0997b;
   --blue-bg: rgba(55, 138, 221, 0.18);
   --blue-text: #85b7eb;
+
+  /* Scrollbar */
+  --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.38);
 }
 
 /* ==========================================================================
@@ -143,6 +154,33 @@ body {
 
 h1, h2, h3 { margin: 0; font-weight: 500; }
 
+
+/* ==========================================================================
+   Scrollbar
+   ========================================================================== */
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
+::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-radius);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover);
+}
 
 /* ==========================================================================
    Pictures & Icons
