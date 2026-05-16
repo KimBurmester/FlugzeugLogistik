@@ -633,7 +633,7 @@
     const rows = ADLStore.artikel.getAll();
     if (!rows.length) return;
     tbody.innerHTML = rows.map(r => `
-      <tr>
+      <tr data-artikel-id="${escHtml(r.id)}" style="cursor:pointer">
         <td class="td-mono">${escHtml(r.artikelnummer || r.nr || '—')}</td>
         <td>${escHtml(r.bezeichnung || '—')}</td>
         <td>${escHtml(r.warengruppe || '—')}</td>
@@ -697,5 +697,128 @@
 
   /* Initiales Rendering falls beim Laden bereits Inhalt vorhanden ist */
   if (mainContent) tryRender(mainContent);
+
+  /* ================================================================
+     Artikeldetail-Modal
+     ================================================================ */
+
+  (function () {
+    const overlay  = document.getElementById('modalArtikelDetail');
+    if (!overlay) return;
+    const bodyEl   = document.getElementById('modalArtikelDetailBody');
+    const titleEl  = document.getElementById('modalArtikelDetailTitle');
+    const editBtnEl= document.getElementById('modalArtikelDetailEdit');
+    let currentId  = null;
+
+    function fmtDate(iso) {
+      if (!iso) return null;
+      const d = new Date(iso);
+      return isNaN(d) ? null : d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' });
+    }
+
+    function buildDetailHtml(a) {
+      const row = (label, value) => {
+        const display = (value != null && value !== '')
+          ? `<span style="font-size:13px;color:var(--text-primary)">${escHtml(String(value))}</span>`
+          : `<span style="font-size:13px;color:var(--text-tertiary)">—</span>`;
+        return `<div class="field"><label>${escHtml(label)}</label>${display}</div>`;
+      };
+      return `
+        <p class="form-group-label">Stammdaten</p>
+        <div class="grid-4">
+          ${row('Artikelbezeichnung', a.bezeichnung)}${row('Artikelnummer', a.artikelnummer)}
+          ${row('Warengruppe', a.warengruppe)}${row('Artikelstatus', a.status)}
+        </div>
+        <div class="grid-4">
+          ${row('Einheit', a.einheit)}${row('Chargennummer', a.charge)}
+          ${row('Seriennummer (SN)', a.seriennr)}${row('Maschinennummer (MSN)', a.maschinennr)}
+        </div>
+        <p class="form-group-label">Lagerbestand</p>
+        <div class="grid-4">
+          ${row('Aktueller Bestand', a.bestand)}${row('Mindestbestand', a.mindestbestand)}
+          ${row('Meldebestand', a.meldebestand)}${row('Lagerort', a.lagerort)}
+        </div>
+        <p class="form-group-label">Abmessungen &amp; Verpackung</p>
+        <div class="grid-4">
+          ${row('Länge (cm)', a.laenge)}${row('Breite (cm)', a.breite)}
+          ${row('Höhe (cm)', a.hoehe)}${row('Gewicht (kg)', a.gewicht)}
+        </div>
+        <div class="grid-2">
+          ${row('Verpackungseinheit', a.verpackungseinheit)}${row('Menge pro Einheit', a.mengeProEinheit)}
+        </div>
+        <p class="form-group-label">Einkauf</p>
+        <div class="grid-3">
+          ${row('Lieferant', a.lieferant)}${row('Einkaufspreis (€)', a.einkaufspreis)}
+          ${row('Mindestbestellmenge', a.mindestbestellmenge)}
+        </div>
+        <p class="form-group-label">Verkauf</p>
+        <div class="grid-3">
+          ${row('Verkaufspreis (€)', a.verkaufspreis)}${row('Steuersatz', a.steuersatz)}
+          ${row('Zolltarifnummer', a.zolltarifnummer)}
+        </div>
+        <p class="form-group-label">Versand &amp; Klassifikation</p>
+        <div class="grid-3">
+          ${row('Gefahrgut', a.gefahrgut)}${row('Herkunftsland', a.herkunftsland)}
+          ${row('Barcode (EAN)', a.barcode)}
+        </div>
+        ${a.beschreibung ? `<p class="form-group-label">Beschreibung</p>
+        <div class="field"><span style="font-size:13px;color:var(--text-primary);white-space:pre-wrap">${escHtml(a.beschreibung)}</span></div>` : ''}
+        <p class="form-group-label">Metadaten</p>
+        <div class="grid-3">
+          ${row('Interne Nr.', a.nr)}${row('Erstellt am', fmtDate(a.erstelltAm))}
+          ${row('Geändert am', fmtDate(a.geaendertAm))}
+        </div>`;
+    }
+
+    function openDetail(id) {
+      const a = ADLStore.artikel.getById(id);
+      if (!a) return;
+      currentId = id;
+      if (titleEl) titleEl.textContent = a.bezeichnung || 'Artikeldetails';
+      if (bodyEl) bodyEl.innerHTML = buildDetailHtml(a);
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDetail() {
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+      currentId = null;
+    }
+
+    document.getElementById('modalArtikelDetailClose')?.addEventListener('click', closeDetail);
+    document.getElementById('modalArtikelDetailSchliessen')?.addEventListener('click', closeDetail);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeDetail(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) closeDetail();
+    });
+
+    editBtnEl?.addEventListener('click', () => {
+      if (!currentId) return;
+      const id = currentId;
+      closeDetail();
+      const mc = document.querySelector('.main-content');
+      if (!mc) return;
+      fetch('sites/Artikel.html')
+        .then(r => r.text())
+        .then(html => {
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const main = doc.querySelector('main');
+          mc.innerHTML = main ? main.innerHTML : '';
+          document.dispatchEvent(new CustomEvent('adl:edit-navigate', { detail: { editId: id } }));
+        });
+      document.querySelectorAll('.sidebar-item').forEach(i => {
+        i.classList.toggle('active', i.getAttribute('data-page') === 'sites/Artikel.html');
+      });
+    });
+
+    /* Zeilenklick in der Artikeldatenbank-Tabelle */
+    document.addEventListener('click', e => {
+      if (e.target.closest('button')) return;
+      const tr = e.target.closest('tr[data-artikel-id]');
+      if (!tr) return;
+      openDetail(tr.dataset.artikelId);
+    });
+  })();
 
 })();
