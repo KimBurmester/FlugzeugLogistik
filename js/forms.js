@@ -24,6 +24,14 @@
     return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
   }
 
+  function formatDateTime(iso) {
+    if (!iso) return '—';
+    const d = new Date(iso);
+    if (isNaN(d)) return iso;
+    return d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' })
+      + ' ' + d.toLocaleTimeString('de-DE', { hour: '2-digit', minute: '2-digit' });
+  }
+
   function formatEuro(n) {
     if (n == null || n === '') return '—';
     return Number(n).toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
@@ -31,7 +39,7 @@
 
   function badge(status) {
     const map = {
-      'Aktiv':'success','Abgeschlossen':'success','Abgeschlossen (i.O.)':'success','Erfolgreich':'success','Sehr gut':'success',
+      'Aktiv':'success','Abgeschlossen':'success','Abgeschlossen (i.O.)':'success','Erfolgreich':'success','Sehr gut':'success','Neuanlage':'success',
       'In Lieferung':'warning','In Arbeit':'warning','In Prüfung':'warning','In Wartung':'warning','Nacharbeit':'warning','Befriedigend':'warning','Hoch':'warning',
       'Offen':'info','Geplant':'info','Erwartet':'info','Gut':'info','Normal':'info',
       'Abgelehnt (n.i.O.)':'danger','Defekt':'danger','Gesperrt':'danger','Dringend':'danger','Notfall':'danger','Nicht abgeschlossen':'danger',
@@ -92,10 +100,12 @@
     document.getElementById('modalNeuerArtikelSave')?.addEventListener('click', () => {
       const bezeichnung = val('m-artikelbezeichnung');
       if (!bezeichnung) { toast('Bitte Artikelbezeichnung angeben.', 'danger'); return; }
+      const artikelnummer = val('m-artikelnummer');
+      const lagerort      = val('m-lagerort');
       ADLStore.artikel.add({
         nr:             ADLStore.artikel.nextNr('ART'),
         bezeichnung,
-        artikelnummer:  val('m-artikelnummer'),
+        artikelnummer,
         warengruppe:    val('m-warengruppe'),
         status:         val('m-artikelstatus'),
         einheit:        val('m-einheit'),
@@ -105,10 +115,21 @@
         bestand:        val('m-bestand'),
         mindestbestand: val('m-mindestbestand'),
         meldebestand:   val('m-meldebestand'),
-        lagerort:       val('m-lagerort'),
+        lagerort,
         einkaufspreis:  val('m-einkaufspreis'),
         verkaufspreis:  val('m-verkaufspreis'),
         beschreibung:   val('m-beschreibung'),
+      });
+      ADLStore.bewegungen.add({
+        nr:          ADLStore.bewegungen.nextNr('BWG'),
+        artikelnummer,
+        bezeichnung,
+        seriennr:    val('m-seriennummer'),
+        typ:         'Neuanlage',
+        von:         '—',
+        nach:        lagerort || 'Lager',
+        benutzer:    'System',
+        status:      'Abgeschlossen',
       });
       toast(`Artikel „${bezeichnung}" gespeichert.`);
     });
@@ -356,6 +377,58 @@
       return;
     }
 
+    /* Artikel (Artikel.html) */
+    if (mc.querySelector('#artikelbezeichnung') !== null) {
+      const bezeichnung   = val('artikelbezeichnung');
+      if (!bezeichnung) { toast('Bitte Artikelbezeichnung angeben.', 'danger'); return; }
+      const artikelnummer = val('artikelnummer');
+      const lagerort      = val('lagerort');
+      ADLStore.artikel.add({
+        nr:                 ADLStore.artikel.nextNr('ART'),
+        bezeichnung,
+        artikelnummer,
+        warengruppe:        sval('warengruppe'),
+        status:             sval('artikelstatus'),
+        einheit:            sval('einheit'),
+        charge:             val('charge'),
+        seriennr:           val('seriennummer'),
+        maschinennr:        val('maschinennummer'),
+        bestand:            val('bestand'),
+        mindestbestand:     val('mindestbestand'),
+        meldebestand:       val('meldebestand'),
+        lagerort,
+        laenge:             val('laenge'),
+        breite:             val('breite'),
+        hoehe:              val('hoehe'),
+        gewicht:            val('gewicht'),
+        verpackungseinheit: sval('verpackungseinheit'),
+        mengeProEinheit:    val('mengeProEinheit'),
+        lieferant:          sval('lieferant'),
+        einkaufspreis:      val('einkaufspreis'),
+        mindestbestellmenge:val('mindestbestellmenge'),
+        verkaufspreis:      val('verkaufspreis'),
+        steuersatz:         sval('steuersatz'),
+        zolltarifnummer:    val('zolltarifnummer'),
+        gefahrgut:          sval('gefahrgut'),
+        herkunftsland:      sval('herkunftsland'),
+        barcode:            val('barcode'),
+        beschreibung:       val('beschreibung'),
+      });
+      ADLStore.bewegungen.add({
+        nr:          ADLStore.bewegungen.nextNr('BWG'),
+        artikelnummer,
+        bezeichnung,
+        seriennr:    val('seriennummer'),
+        typ:         'Neuanlage',
+        von:         '—',
+        nach:        lagerort || 'Lager',
+        benutzer:    'System',
+        status:      'Abgeschlossen',
+      });
+      toast(`Artikel „${bezeichnung}" gespeichert.`);
+      return;
+    }
+
     /* Bestellung (Bestellung.html) */
     if (mc.querySelector('#bestellnummer') !== null) {
       const nr = val('bestellnummer');
@@ -496,11 +569,49 @@
       </tr>`).join('');
   }
 
+  function renderArtikeldatenbank(tbody) {
+    const rows = ADLStore.artikel.getAll();
+    if (!rows.length) return;
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td class="td-mono">${escHtml(r.artikelnummer || r.nr || '—')}</td>
+        <td>${escHtml(r.bezeichnung || '—')}</td>
+        <td>${escHtml(r.warengruppe || '—')}</td>
+        <td>${escHtml(r.einheit || '—')}</td>
+        <td>${escHtml(String(r.bestand !== '' ? r.bestand : '—'))}</td>
+        <td>${escHtml(String(r.mindestbestand !== '' ? r.mindestbestand : '—'))}</td>
+        <td>${escHtml(r.lagerort || '—')}</td>
+        <td>${badge(r.status || 'Aktiv')}</td>
+        <td>${editBtn('sites/Artikel.html')}</td>
+      </tr>`).join('');
+  }
+
+  function renderArtikelbewegung(tbody) {
+    const rows = ADLStore.bewegungen.getAll();
+    if (!rows.length) return;
+    tbody.innerHTML = rows.map(r => `
+      <tr>
+        <td class="td-mono">${escHtml(r.nr)}</td>
+        <td class="td-mono">${formatDateTime(r.erstelltAm)}</td>
+        <td class="td-mono">${escHtml(r.artikelnummer || '—')}</td>
+        <td>${escHtml(r.bezeichnung || '—')}</td>
+        <td class="td-mono">${escHtml(r.seriennr || '—')}</td>
+        <td>${badge(r.typ || 'Neuanlage')}</td>
+        <td>${escHtml(r.von || '—')}</td>
+        <td>${escHtml(r.nach || '—')}</td>
+        <td class="td-mono">${escHtml(r.transporteinheit || '—')}</td>
+        <td>${escHtml(r.benutzer || '—')}</td>
+        <td>${badge(r.status || 'Abgeschlossen')}</td>
+      </tr>`).join('');
+  }
+
   /* ================================================================
      Seitenerkennung & automatisches Tabellen-Rendering
      ================================================================ */
 
   const TITLE_MAP = {
+    'Artikeldatenbank':     renderArtikeldatenbank,
+    'Artikelbewegung':      renderArtikelbewegung,
     'Bestelldatenbank':     renderBestelldatenbank,
     'Lieferantenübersicht': renderLieferanten,
     'Wareneingänge':        renderWareneingaenge,

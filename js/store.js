@@ -70,6 +70,7 @@
 
   const ADLStore = {
     artikel:              new Collection('artikel'),
+    bewegungen:           new Collection('bewegungen'),
     stuecklisten:         new Collection('stuecklisten'),
     auftraege:            new Collection('auftraege'),
     produktionsauftraege: new Collection('produktionsauftraege'),
