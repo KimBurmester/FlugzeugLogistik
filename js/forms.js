@@ -39,10 +39,11 @@
 
   function badge(status) {
     const map = {
-      'Aktiv':'success','Abgeschlossen':'success','Abgeschlossen (i.O.)':'success','Erfolgreich':'success','Sehr gut':'success','Neuanlage':'success',
-      'In Lieferung':'warning','In Arbeit':'warning','In Prüfung':'warning','In Wartung':'warning','Nacharbeit':'warning','Befriedigend':'warning','Hoch':'warning',
-      'Offen':'info','Geplant':'info','Erwartet':'info','Gut':'info','Normal':'info',
-      'Abgelehnt (n.i.O.)':'danger','Defekt':'danger','Gesperrt':'danger','Dringend':'danger','Notfall':'danger','Nicht abgeschlossen':'danger',
+      'Aktiv':'success','Abgeschlossen':'success','Abgeschlossen (i.O.)':'success','Erfolgreich':'success','Sehr gut':'success','Neuanlage':'success','Wareneingang':'success',
+      'In Lieferung':'warning','In Arbeit':'warning','In Prüfung':'warning','In Wartung':'warning','Nacharbeit':'warning','Befriedigend':'warning','Hoch':'warning','Auslagerung':'warning',
+      'Offen':'info','Geplant':'info','Erwartet':'info','Gut':'info','Normal':'info','Einlagerung':'info',
+      'Abgelehnt (n.i.O.)':'danger','Defekt':'danger','Gesperrt':'danger','Dringend':'danger','Notfall':'danger','Nicht abgeschlossen':'danger','Versand':'danger',
+      'Umlagerung':'purple',
       'Niedrig':'secondary',
     };
     const cls = map[status] || 'info';
@@ -722,23 +723,108 @@
     }
   }
 
-  function renderArtikelbewegung(tbody) {
-    const rows = ADLStore.bewegungen.getAll();
-    if (!rows.length) return;
-    tbody.innerHTML = rows.map(r => `
-      <tr>
-        <td class="td-mono">${escHtml(r.nr)}</td>
-        <td class="td-mono">${formatDateTime(r.erstelltAm)}</td>
-        <td class="td-mono">${escHtml(r.artikelnummer || '—')}</td>
-        <td>${escHtml(r.bezeichnung || '—')}</td>
-        <td class="td-mono">${escHtml(r.seriennr || '—')}</td>
-        <td>${badge(r.typ || 'Neuanlage')}</td>
-        <td>${escHtml(r.von || '—')}</td>
-        <td>${escHtml(r.nach || '—')}</td>
-        <td class="td-mono">${escHtml(r.transporteinheit || '—')}</td>
-        <td>${escHtml(r.benutzer || '—')}</td>
-        <td>${badge(r.status || 'Abgeschlossen')}</td>
-      </tr>`).join('');
+  const BEWEGUNG_PER_PAGE = 12;
+
+  function updateBewegungKpis(all, root) {
+    const todayStr = new Date().toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+    const yesterdayDate = new Date();
+    yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+    const yesterdayStr = yesterdayDate.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    const heute   = all.filter(r => { const d = new Date(r.erstelltAm); return !isNaN(d) && d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) === todayStr; }).length;
+    const gestern = all.filter(r => { const d = new Date(r.erstelltAm); return !isNaN(d) && d.toLocaleDateString('de-DE', { day:'2-digit', month:'2-digit', year:'numeric' }) === yesterdayStr; }).length;
+    const wareneingaenge = all.filter(r => r.typ === 'Wareneingang').length;
+    const auslagerungen  = all.filter(r => r.typ === 'Auslagerung').length;
+    const versand        = all.filter(r => r.typ === 'Versand').length;
+
+    const set = (id, v) => { const el = root?.querySelector('#' + id); if (el) el.textContent = v; };
+    set('kpi-bwg-heute',        heute.toLocaleString('de-DE'));
+    set('kpi-bwg-wareneingang', wareneingaenge.toLocaleString('de-DE'));
+    set('kpi-bwg-auslagerung',  auslagerungen.toLocaleString('de-DE'));
+    set('kpi-bwg-versand',      versand.toLocaleString('de-DE'));
+
+    const trendEl = root?.querySelector('#kpi-bwg-trend');
+    if (trendEl) {
+      const diff = heute - gestern;
+      if (diff > 0)      { trendEl.textContent = `+${diff} vs. gestern`; trendEl.className = 'metric-trend up'; }
+      else if (diff < 0) { trendEl.textContent = `${diff} vs. gestern`;  trendEl.className = 'metric-trend down'; }
+      else               { trendEl.textContent = 'Wie gestern';           trendEl.className = 'metric-trend'; }
+    }
+  }
+
+  function renderArtikelbewegung(tbody, page) {
+    page = page || 1;
+    const all        = ADLStore.bewegungen.getAll();
+    const total      = all.length;
+    const totalPages = Math.max(1, Math.ceil(total / BEWEGUNG_PER_PAGE));
+    page             = Math.min(Math.max(1, page), totalPages);
+    const slice      = all.slice((page - 1) * BEWEGUNG_PER_PAGE, page * BEWEGUNG_PER_PAGE);
+
+    const root = tbody.closest('.container') || tbody.closest('section');
+    updateBewegungKpis(all, root);
+
+    tbody.innerHTML = slice.length
+      ? slice.map(r => `
+          <tr>
+            <td class="td-mono">${escHtml(r.nr)}</td>
+            <td class="td-mono">${formatDateTime(r.erstelltAm)}</td>
+            <td class="td-mono">${escHtml(r.artikelnummer || '—')}</td>
+            <td>${escHtml(r.bezeichnung || '—')}</td>
+            <td class="td-mono">${escHtml(r.seriennr || '—')}</td>
+            <td>${badge(r.typ || 'Neuanlage')}</td>
+            <td>${escHtml(r.von || '—')}</td>
+            <td>${escHtml(r.nach || '—')}</td>
+            <td class="td-mono">${escHtml(r.transporteinheit || '—')}</td>
+            <td>${escHtml(r.benutzer || '—')}</td>
+            <td>${badge(r.status || 'Abgeschlossen')}</td>
+          </tr>`).join('')
+      : `<tr><td colspan="11" style="text-align:center;padding:24px;color:var(--text-tertiary)">Keine Bewegungen gespeichert</td></tr>`;
+
+    const infoEl = root?.querySelector('.pagination-info');
+    const btnsEl = root?.querySelector('.pagination-buttons');
+
+    if (infoEl) {
+      if (total === 0) {
+        infoEl.textContent = 'Keine Bewegungen';
+      } else {
+        const from = (page - 1) * BEWEGUNG_PER_PAGE + 1;
+        const to   = Math.min(page * BEWEGUNG_PER_PAGE, total);
+        infoEl.textContent = `Zeigt ${from}–${to} von ${total} ${total === 1 ? 'Bewegung' : 'Bewegungen'}`;
+      }
+    }
+
+    if (btnsEl) {
+      let pageNums;
+      if (totalPages <= 7) {
+        pageNums = Array.from({ length: totalPages }, (_, i) => i + 1);
+      } else {
+        const s = new Set(
+          [1, 2, page - 1, page, page + 1, totalPages - 1, totalPages]
+            .filter(p => p >= 1 && p <= totalPages)
+        );
+        pageNums = [...s].sort((a, b) => a - b);
+      }
+
+      let html = `<button class="btn btn-sm" data-bwg-prev ${page === 1 ? 'disabled' : ''}>${PREV_SVG}</button>`;
+      let prev = null;
+      for (const p of pageNums) {
+        if (prev !== null && p - prev > 1) html += `<span class="pagination-ellipsis">…</span>`;
+        html += `<button class="btn btn-sm${p === page ? ' btn-primary' : ''}" data-bwg="${p}">${p}</button>`;
+        prev = p;
+      }
+      html += `<button class="btn btn-sm" data-bwg-next ${page === totalPages ? 'disabled' : ''}>${NEXT_SVG}</button>`;
+
+      btnsEl.innerHTML = html;
+      btnsEl.querySelectorAll('[data-bwg]').forEach(btn =>
+        btn.addEventListener('click', () => renderArtikelbewegung(tbody, +btn.dataset.bwg))
+      );
+      btnsEl.querySelector('[data-bwg-prev]')?.addEventListener('click', () =>
+        renderArtikelbewegung(tbody, page - 1)
+      );
+      btnsEl.querySelector('[data-bwg-next]')?.addEventListener('click', () =>
+        renderArtikelbewegung(tbody, page + 1)
+      );
+    }
   }
 
   /* ================================================================

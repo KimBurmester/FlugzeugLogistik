@@ -23,20 +23,20 @@
     <div class="grid-4 kpi-row">
         <div class="metric-card">
             <div class="metric-label">Bewegungen heute</div>
-            <div class="metric-value">47</div>
-            <div class="metric-trend up">+12 vs. gestern</div>
+            <div class="metric-value" id="kpi-bwg-heute">—</div>
+            <div class="metric-trend" id="kpi-bwg-trend"></div>
         </div>
         <div class="metric-card">
             <div class="metric-label">Wareneingänge</div>
-            <div class="metric-value metric-value-success">12</div>
+            <div class="metric-value metric-value-success" id="kpi-bwg-wareneingang">—</div>
         </div>
         <div class="metric-card">
             <div class="metric-label">Auslagerungen</div>
-            <div class="metric-value metric-value-info">28</div>
+            <div class="metric-value metric-value-info" id="kpi-bwg-auslagerung">—</div>
         </div>
         <div class="metric-card">
             <div class="metric-label">Versandfertig</div>
-            <div class="metric-value metric-value-warning">7</div>
+            <div class="metric-value metric-value-warning" id="kpi-bwg-versand">—</div>
         </div>
     </div>
 
@@ -103,19 +103,8 @@
 
     <!-- Pagination -->
     <div class="pagination-row">
-        <span class="pagination-info">Zeigt 1–12 von 47 Bewegungen</span>
-        <div class="pagination-buttons">
-            <button class="btn btn-sm" disabled>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
-            <button class="btn btn-sm btn-primary">1</button>
-            <button class="btn btn-sm">2</button>
-            <button class="btn btn-sm">3</button>
-            <button class="btn btn-sm">4</button>
-            <button class="btn btn-sm">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
-        </div>
+        <span class="pagination-info"></span>
+        <div class="pagination-buttons"></div>
     </div>
 
 </section>
