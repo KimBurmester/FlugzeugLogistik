@@ -90,6 +90,34 @@
 
   function seed() {
 
+    /* Aufträge */
+    if (!ADLStore.auftraege.count()) {
+      [
+        { nr:'AUF-2026-0001', projektnr:'PRJ-2026-001', kunde:'Lufthansa Technik AG',    typ:'Produktion',         prioritaet:'Kritisch', status:'In Bearbeitung', datum:'2026-01-02', verantwortlicher:'K. Burmester' },
+        { nr:'AUF-2026-0002', projektnr:'PRJ-2026-002', kunde:'Airbus SE',               typ:'Wartung',            prioritaet:'Normal',   status:'Offen',          datum:'2026-01-05', verantwortlicher:'M. Schulz'    },
+        { nr:'AUF-2026-0003', projektnr:'PRJ-2026-003', kunde:'Deutsche Lufthansa AG',   typ:'Produktion',         prioritaet:'Hoch',     status:'In Bearbeitung', datum:'2026-01-07', verantwortlicher:'J. Weber'     },
+        { nr:'AUF-2026-0004', projektnr:'PRJ-2026-004', kunde:'MTU Aero Engines AG',     typ:'Transportauftrag',   prioritaet:'Niedrig',  status:'Abgeschlossen',  datum:'2026-01-10', verantwortlicher:'K. Burmester' },
+        { nr:'AUF-2026-0005', projektnr:'PRJ-2026-005', kunde:'Rolls-Royce Deutschland', typ:'Reparatur',          prioritaet:'Hoch',     status:'Offen',          datum:'2026-01-12', verantwortlicher:'M. Schulz'    },
+        { nr:'AUF-2026-0006', projektnr:'PRJ-2026-002', kunde:'Airbus SE',               typ:'Materialbestellung', prioritaet:'Normal',   status:'Abgeschlossen',  datum:'2026-01-15', verantwortlicher:'J. Weber'     },
+        { nr:'AUF-2026-0007', projektnr:'PRJ-2026-006', kunde:'Safran S.A.',             typ:'Produktion',         prioritaet:'Kritisch', status:'In Bearbeitung', datum:'2026-01-18', verantwortlicher:'K. Burmester' },
+        { nr:'AUF-2026-0008', projektnr:'PRJ-2026-007', kunde:'Fraport AG',              typ:'Wartung',            prioritaet:'Normal',   status:'Storniert',      datum:'2026-01-20', verantwortlicher:'M. Schulz'    },
+      ].forEach(r => ADLStore.auftraege.add(r));
+    }
+
+    /* Produktionsaufträge */
+    if (!ADLStore.produktionsauftraege.count()) {
+      [
+        { nr:'PRD-2026-0001', bezeichnung:'Hydraulikeinheit HE-400',     artikelnr:'ART-2026-0042', menge:'10 Stück',  linie:'Linie 1',        start:'2026-01-02', ende:'2026-01-15', status:'Abgeschlossen' },
+        { nr:'PRD-2026-0002', bezeichnung:'Drucksensorbaugruppe DS-200', artikelnr:'ART-2026-0107', menge:'25 Stück',  linie:'Linie 2',        start:'2026-01-10', ende:'2026-01-20', status:'Laufend'       },
+        { nr:'PRD-2026-0003', bezeichnung:'Pneumatikmodul PM-50',        artikelnr:'ART-2026-0088', menge:'8 Stück',   linie:'Montagelinie A', start:'2026-01-12', ende:'2026-01-25', status:'Laufend'       },
+        { nr:'PRD-2026-0004', bezeichnung:'Kugelventilblock KVB-40',     artikelnr:'ART-2026-0055', menge:'50 Stück',  linie:'Linie 1',        start:'2026-01-15', ende:'2026-01-22', status:'Abgeschlossen' },
+        { nr:'PRD-2026-0005', bezeichnung:'Hydraulikschlauchset HLP',    artikelnr:'ART-2026-0201', menge:'100 Stück', linie:'Linie 3',        start:'2026-01-18', ende:'2026-01-28', status:'Verzögert'     },
+        { nr:'PRD-2026-0006', bezeichnung:'Steuerventil SV-300',         artikelnr:'ART-2026-0163', menge:'15 Stück',  linie:'Linie 2',        start:'2026-01-20', ende:'2026-01-30', status:'Laufend'       },
+        { nr:'PRD-2026-0007', bezeichnung:'Druckbehälter DB-60',         artikelnr:'ART-2026-0092', menge:'5 Stück',   linie:'Montagelinie B', start:'2026-01-22', ende:'2026-02-10', status:'Planung'       },
+        { nr:'PRD-2026-0008', bezeichnung:'Filtereinheit FE-200',        artikelnr:'ART-2026-0134', menge:'30 Stück',  linie:'Linie 1',        start:'2026-01-25', ende:'2026-02-05', status:'Verzögert'     },
+      ].forEach(r => ADLStore.produktionsauftraege.add(r));
+    }
+
     /* Lieferanten */
     if (!ADLStore.lieferanten.count()) {
       [
