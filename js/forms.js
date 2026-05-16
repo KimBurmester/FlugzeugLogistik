@@ -59,6 +59,44 @@
     return `<button class="btn btn-sm btn-ghost" data-navigate="${page}">${EDIT_SVG}</button>`;
   }
 
+  function fillArtikelForm(mc, a) {
+    const set = (id, v) => { const el = mc.querySelector('#' + id); if (el) el.value = v ?? ''; };
+    const sel = (id, v) => {
+      const el = mc.querySelector('#' + id);
+      if (!el || v == null) return;
+      const opt = [...el.options].find(o => o.text === v || o.value === v);
+      if (opt) el.value = opt.value;
+    };
+    set('artikelbezeichnung',  a.bezeichnung);
+    set('artikelnummer',       a.artikelnummer);
+    sel('warengruppe',         a.warengruppe);
+    sel('artikelstatus',       a.status);
+    sel('einheit',             a.einheit);
+    set('charge',              a.charge);
+    set('seriennummer',        a.seriennr);
+    set('maschinennummer',     a.maschinennr);
+    set('bestand',             a.bestand);
+    set('mindestbestand',      a.mindestbestand);
+    set('meldebestand',        a.meldebestand);
+    set('lagerort',            a.lagerort);
+    set('laenge',              a.laenge);
+    set('breite',              a.breite);
+    set('hoehe',               a.hoehe);
+    set('gewicht',             a.gewicht);
+    sel('verpackungseinheit',  a.verpackungseinheit);
+    set('mengeProEinheit',     a.mengeProEinheit);
+    sel('lieferant',           a.lieferant);
+    set('einkaufspreis',       a.einkaufspreis);
+    set('mindestbestellmenge', a.mindestbestellmenge);
+    set('verkaufspreis',       a.verkaufspreis);
+    sel('steuersatz',          a.steuersatz);
+    set('zolltarifnummer',     a.zolltarifnummer);
+    sel('gefahrgut',           a.gefahrgut);
+    sel('herkunftsland',       a.herkunftsland);
+    set('barcode',             a.barcode);
+    set('beschreibung',        a.beschreibung);
+  }
+
   /* ---- Toast-Benachrichtigung --------------------------------------- */
 
   function toast(msg, type = 'success') {
@@ -339,6 +377,19 @@
   }); // DOMContentLoaded
 
   /* ================================================================
+     Edit-Navigation: Artikel in Formular laden
+     ================================================================ */
+
+  document.addEventListener('adl:edit-navigate', ({ detail: { editId } }) => {
+    const mc = document.querySelector('.main-content');
+    if (!mc || !mc.querySelector('#artikelbezeichnung')) return;
+    const artikel = ADLStore.artikel.getById(editId);
+    if (!artikel) return;
+    mc.dataset.artikelEditId = editId;
+    fillArtikelForm(mc, artikel);
+  });
+
+  /* ================================================================
      Seitenformulare (dynamisch geladen in .main-content)
      ================================================================ */
 
@@ -383,8 +434,7 @@
       if (!bezeichnung) { toast('Bitte Artikelbezeichnung angeben.', 'danger'); return; }
       const artikelnummer = val('artikelnummer');
       const lagerort      = val('lagerort');
-      ADLStore.artikel.add({
-        nr:                 ADLStore.artikel.nextNr('ART'),
+      const artikelData = {
         bezeichnung,
         artikelnummer,
         warengruppe:        sval('warengruppe'),
@@ -413,19 +463,27 @@
         herkunftsland:      sval('herkunftsland'),
         barcode:            val('barcode'),
         beschreibung:       val('beschreibung'),
-      });
-      ADLStore.bewegungen.add({
-        nr:          ADLStore.bewegungen.nextNr('BWG'),
-        artikelnummer,
-        bezeichnung,
-        seriennr:    val('seriennummer'),
-        typ:         'Neuanlage',
-        von:         '—',
-        nach:        lagerort || 'Lager',
-        benutzer:    'System',
-        status:      'Abgeschlossen',
-      });
-      toast(`Artikel „${bezeichnung}" gespeichert.`);
+      };
+      const editId = mc.dataset.artikelEditId;
+      if (editId) {
+        ADLStore.artikel.update(editId, artikelData);
+        delete mc.dataset.artikelEditId;
+        toast(`Artikel „${bezeichnung}" aktualisiert.`);
+      } else {
+        ADLStore.artikel.add({ nr: ADLStore.artikel.nextNr('ART'), ...artikelData });
+        ADLStore.bewegungen.add({
+          nr:          ADLStore.bewegungen.nextNr('BWG'),
+          artikelnummer,
+          bezeichnung,
+          seriennr:    val('seriennummer'),
+          typ:         'Neuanlage',
+          von:         '—',
+          nach:        lagerort || 'Lager',
+          benutzer:    'System',
+          status:      'Abgeschlossen',
+        });
+        toast(`Artikel „${bezeichnung}" gespeichert.`);
+      }
       mc.querySelectorAll('input, textarea').forEach(el => (el.value = ''));
       mc.querySelectorAll('select').forEach(el => (el.selectedIndex = 0));
       return;
@@ -584,7 +642,7 @@
         <td>${escHtml(String(r.mindestbestand !== '' ? r.mindestbestand : '—'))}</td>
         <td>${escHtml(r.lagerort || '—')}</td>
         <td>${badge(r.status || 'Aktiv')}</td>
-        <td>${editBtn('sites/Artikel.html')}</td>
+        <td><button class="btn btn-sm btn-ghost" data-navigate="sites/Artikel.html" data-edit-id="${escHtml(r.id)}">${EDIT_SVG}</button></td>
       </tr>`).join('');
   }
 

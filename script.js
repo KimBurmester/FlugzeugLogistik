@@ -215,7 +215,8 @@ renderSidebar('');
 document.addEventListener('click', e => {
   const btn = e.target.closest('[data-navigate]');
   if (!btn) return;
-  const page = btn.getAttribute('data-navigate');
+  const page   = btn.getAttribute('data-navigate');
+  const editId = btn.getAttribute('data-edit-id') || null;
   const mainContent = document.querySelector('.main-content');
   if (!mainContent) return;
   fetch(page)
@@ -224,6 +225,9 @@ document.addEventListener('click', e => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const main = doc.querySelector('main');
       mainContent.innerHTML = main ? main.innerHTML : '';
+      if (editId) {
+        document.dispatchEvent(new CustomEvent('adl:edit-navigate', { detail: { editId } }));
+      }
     });
   document.querySelectorAll('.sidebar-item').forEach(i => {
     i.classList.toggle('active', i.getAttribute('data-page') === page);
