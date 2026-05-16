@@ -63,6 +63,143 @@
         </nav>
       </aside>
     <div class="main-content">
+      <section class="container">
+        <div class="page-header">
+          <h2 class="section-title">Dashboard</h2>
+        </div>
+
+        <div id="adl-dashboard">
+
+          <div class="db-grid-3">
+
+            <!-- Artikel -->
+            <div class="db-card">
+              <div class="db-card-head">
+                <span>Artikel</span>
+                <button class="btn btn-sm" data-navigate="sites/Artikeldatenbank.html">Alle ansehen →</button>
+              </div>
+              <div class="db-kpi-row">
+                <div class="db-kpi">
+                  <div class="db-kpi-label">Gesamt</div>
+                  <div class="db-kpi-value" id="db-art-gesamt">—</div>
+                </div>
+                <div class="db-kpi db-kpi-success">
+                  <div class="db-kpi-label">Aktiv</div>
+                  <div class="db-kpi-value" id="db-art-aktiv">—</div>
+                </div>
+                <div class="db-kpi db-kpi-warn">
+                  <div class="db-kpi-label">Unterbestand</div>
+                  <div class="db-kpi-value" id="db-art-unterbestand">—</div>
+                </div>
+              </div>
+              <hr class="db-divider">
+              <div class="db-list" id="db-art-list"></div>
+            </div>
+
+            <!-- Aufträge -->
+            <div class="db-card">
+              <div class="db-card-head">
+                <span>Aufträge</span>
+                <button class="btn btn-sm" data-navigate="sites/Auftragsdatenbank.html">Alle ansehen →</button>
+              </div>
+              <div class="db-kpi-row">
+                <div class="db-kpi">
+                  <div class="db-kpi-label">Gesamt</div>
+                  <div class="db-kpi-value" id="db-auf-gesamt">—</div>
+                </div>
+                <div class="db-kpi db-kpi-info">
+                  <div class="db-kpi-label">Offen</div>
+                  <div class="db-kpi-value" id="db-auf-offen">—</div>
+                </div>
+                <div class="db-kpi db-kpi-danger">
+                  <div class="db-kpi-label">Kritisch</div>
+                  <div class="db-kpi-value" id="db-auf-kritisch">—</div>
+                </div>
+              </div>
+              <hr class="db-divider">
+              <div class="db-list" id="db-auf-list"></div>
+            </div>
+
+            <!-- Bestellverwaltung -->
+            <div class="db-card">
+              <div class="db-card-head">
+                <span>Bestellverwaltung</span>
+                <button class="btn btn-sm" data-navigate="sites/Bestelldatenbank.html">Alle ansehen →</button>
+              </div>
+              <div class="db-kpi-row">
+                <div class="db-kpi">
+                  <div class="db-kpi-label">Gesamt</div>
+                  <div class="db-kpi-value" id="db-bst-gesamt">—</div>
+                </div>
+                <div class="db-kpi db-kpi-info">
+                  <div class="db-kpi-label">Offen</div>
+                  <div class="db-kpi-value" id="db-bst-offen">—</div>
+                </div>
+                <div class="db-kpi db-kpi-warn">
+                  <div class="db-kpi-label">In Lieferung</div>
+                  <div class="db-kpi-value" id="db-bst-lieferung">—</div>
+                </div>
+              </div>
+              <hr class="db-divider">
+              <div class="db-list" id="db-bst-list"></div>
+            </div>
+
+          </div><!-- /.db-grid-3 -->
+
+          <div class="db-grid-2">
+
+            <!-- Produktionen -->
+            <div class="db-card">
+              <div class="db-card-head">
+                <span>Produktionen</span>
+                <button class="btn btn-sm" data-navigate="sites/Produktionsdatenbank.html">Alle ansehen →</button>
+              </div>
+              <div class="db-kpi-row">
+                <div class="db-kpi">
+                  <div class="db-kpi-label">Gesamt</div>
+                  <div class="db-kpi-value" id="db-prd-gesamt">—</div>
+                </div>
+                <div class="db-kpi db-kpi-info">
+                  <div class="db-kpi-label">Laufend</div>
+                  <div class="db-kpi-value" id="db-prd-laufend">—</div>
+                </div>
+                <div class="db-kpi db-kpi-success">
+                  <div class="db-kpi-label">Abgeschlossen</div>
+                  <div class="db-kpi-value" id="db-prd-abgeschlossen">—</div>
+                </div>
+              </div>
+              <hr class="db-divider">
+              <div class="db-list" id="db-prd-list"></div>
+            </div>
+
+            <!-- Instandhaltung -->
+            <div class="db-card">
+              <div class="db-card-head">
+                <span>Instandhaltung</span>
+                <button class="btn btn-sm" data-navigate="sites/Wartungsdatenbank.html">Alle ansehen →</button>
+              </div>
+              <div class="db-kpi-row">
+                <div class="db-kpi">
+                  <div class="db-kpi-label">Geräte</div>
+                  <div class="db-kpi-value" id="db-ih-geraete">—</div>
+                </div>
+                <div class="db-kpi db-kpi-warn">
+                  <div class="db-kpi-label">Offene Wartungen</div>
+                  <div class="db-kpi-value" id="db-ih-wartungen">—</div>
+                </div>
+                <div class="db-kpi db-kpi-danger">
+                  <div class="db-kpi-label">Defekt / Wartung</div>
+                  <div class="db-kpi-value" id="db-ih-kritisch">—</div>
+                </div>
+              </div>
+              <hr class="db-divider">
+              <div class="db-list" id="db-ih-list"></div>
+            </div>
+
+          </div><!-- /.db-grid-2 -->
+
+        </div><!-- /#adl-dashboard -->
+      </section>
       </div>
 
     </div>
