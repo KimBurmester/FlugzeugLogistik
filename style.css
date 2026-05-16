@@ -819,6 +819,18 @@ input[type="range"]::-moz-range-thumb {
   border-right: 0.5px solid var(--border-subtle);
   padding: 20px 12px;
   transition: transform var(--transition-base);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-version {
+  margin-top: auto;
+  padding: 14px 10px 4px;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  text-align: center;
+  letter-spacing: .3px;
+  user-select: none;
 }
 
 .sidebar-nav {
