@@ -42,7 +42,7 @@
       'Aktiv':'success','Abgeschlossen':'success','Abgeschlossen (i.O.)':'success','Erfolgreich':'success','Sehr gut':'success','Neuanlage':'success','Wareneingang':'success',
       'In Lieferung':'warning','In Arbeit':'warning','In Prüfung':'warning','In Wartung':'warning','Nacharbeit':'warning','Befriedigend':'warning','Hoch':'warning','Auslagerung':'warning',
       'Offen':'info','Geplant':'info','Erwartet':'info','Gut':'info','Normal':'info','Einlagerung':'info',
-      'Abgelehnt (n.i.O.)':'danger','Defekt':'danger','Gesperrt':'danger','Dringend':'danger','Notfall':'danger','Nicht abgeschlossen':'danger','Versand':'danger',
+      'Abgelehnt (n.i.O.)':'danger','Defekt':'danger','Gesperrt':'danger','Dringend':'danger','Notfall':'danger','Nicht abgeschlossen':'danger','Versand':'danger','Gelöscht':'danger','Löschung':'danger',
       'Umlagerung':'purple',
       'Niedrig':'secondary',
     };
@@ -58,6 +58,12 @@
 
   function editBtn(page) {
     return `<button class="btn btn-sm btn-ghost" data-navigate="${page}">${EDIT_SVG}</button>`;
+  }
+
+  const DELETE_SVG = `<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>`;
+
+  function deleteBtn(store, id, label) {
+    return `<button class="btn btn-sm btn-ghost" style="color:var(--danger-text)" data-delete-id="${escHtml(String(id))}" data-delete-store="${escHtml(store)}" data-delete-label="${escHtml(String(label))}">${DELETE_SVG}</button>`;
   }
 
   function fillArtikelForm(mc, a) {
@@ -534,7 +540,7 @@
         <td class="td-mono">${formatEuro(r.gesamtwert)}</td>
         <td>${r.positionen?.length || 0} Pos.</td>
         <td>${badge(r.status)}</td>
-        <td>${editBtn('sites/Bestellung.html')}</td>
+        <td style="white-space:nowrap">${editBtn('sites/Bestellung.html')} ${deleteBtn('bestellungen', r.id, r.nr)}</td>
       </tr>`).join('');
   }
 
@@ -550,7 +556,7 @@
         <td class="td-mono">${escHtml(r.telefon || '—')}</td>
         <td>${badge(r.bewertung || 'Gut')}</td>
         <td>${badge(r.status || 'Aktiv')}</td>
-        <td><button class="btn btn-sm btn-ghost" data-action="neuer-lieferant">${EDIT_SVG}</button></td>
+        <td style="white-space:nowrap"><button class="btn btn-sm btn-ghost" data-action="neuer-lieferant">${EDIT_SVG}</button> ${deleteBtn('lieferanten', r.id, r.name)}</td>
       </tr>`).join('');
   }
 
@@ -567,7 +573,7 @@
         <td class="td-mono">${escHtml(r.lieferschein || '—')}</td>
         <td class="td-mono">${formatDate(r.datum)}</td>
         <td>${badge(r.status)}</td>
-        <td><button class="btn btn-sm btn-ghost" data-action="wareneingang-erfassen">${EDIT_SVG}</button></td>
+        <td style="white-space:nowrap"><button class="btn btn-sm btn-ghost" data-action="wareneingang-erfassen">${EDIT_SVG}</button> ${deleteBtn('wareneingaenge', r.id, r.nr)}</td>
       </tr>`).join('');
   }
 
@@ -585,7 +591,7 @@
         <td class="td-mono">${formatDate(r.datum)}</td>
         <td>${escHtml(r.techniker || '—')}</td>
         <td>${badge(r.status)}</td>
-        <td>${editBtn('sites/Instandhaltung.html')}</td>
+        <td style="white-space:nowrap">${editBtn('sites/Instandhaltung.html')} ${deleteBtn('wartungsauftraege', r.id, r.nr)}</td>
       </tr>`).join('');
   }
 
@@ -606,7 +612,7 @@
         <td class="td-mono">${formatDate(r.letzterService)}</td>
         <td class="td-mono">${formatDate(r.naechsterService)}</td>
         <td>${badge(r.status || 'Aktiv')}</td>
-        <td><button class="btn btn-sm btn-ghost" data-action="neues-geraet">${EDIT_SVG}</button></td>
+        <td style="white-space:nowrap"><button class="btn btn-sm btn-ghost" data-action="neues-geraet">${EDIT_SVG}</button> ${deleteBtn('geraete', r.id, r.bezeichnung)}</td>
       </tr>`;
     }).join('');
   }
@@ -626,7 +632,7 @@
         <td class="td-mono">${formatDate(r.datumEnde || r.datum)}</td>
         <td class="td-mono">${escHtml(String(r.dauer || '—'))}</td>
         <td>${badge('Erfolgreich')}</td>
-        <td>${editBtn('sites/Instandhaltung.html')}</td>
+        <td style="white-space:nowrap">${editBtn('sites/Instandhaltung.html')} ${deleteBtn('wartungsauftraege', r.id, r.nr)}</td>
       </tr>`).join('');
   }
 
@@ -669,7 +675,7 @@
             <td>${escHtml(String(r.mindestbestand !== '' ? r.mindestbestand : '—'))}</td>
             <td>${escHtml(r.lagerort || '—')}</td>
             <td>${badge(r.status || 'Aktiv')}</td>
-            <td><button class="btn btn-sm btn-ghost" data-navigate="sites/Artikel.html" data-edit-id="${escHtml(r.id)}">${EDIT_SVG}</button></td>
+            <td style="white-space:nowrap"><button class="btn btn-sm btn-ghost" data-navigate="sites/Artikel.html" data-edit-id="${escHtml(r.id)}">${EDIT_SVG}</button> ${deleteBtn('artikel', r.id, r.bezeichnung || r.nr)}</td>
           </tr>`).join('')
       : `<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text-tertiary)">Keine Artikel gespeichert</td></tr>`;
 
@@ -986,5 +992,63 @@
       openDetail(tr.dataset.artikelId);
     });
   })();
+
+  /* ================================================================
+     Löschen-Handler – zweistufige Bestätigung ohne Browser-Dialog
+     Erster Klick:  Button wechselt 3 s lang zu „SICHER?"-Stil
+     Zweiter Klick: Datensatz wird entfernt; bei Artikeln zusätzlich
+                    eine Bewegung mit Status „Gelöscht" angelegt
+     Artikelbewegung: kein deleteBtn → kein Löschen möglich
+     ================================================================ */
+
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('[data-delete-id]');
+    if (!btn) return;
+    e.stopPropagation();
+
+    if (!btn.dataset.confirmed) {
+      btn.dataset.confirmed = '1';
+      const saved = { html: btn.innerHTML, color: btn.style.color, bg: btn.style.background, border: btn.style.borderColor };
+      btn.innerHTML        = '<span style="font-size:10px;font-weight:700;letter-spacing:.3px">SICHER?</span>';
+      btn.style.color      = 'var(--danger-text)';
+      btn.style.background = 'var(--danger-bg)';
+      btn.style.borderColor= 'transparent';
+      btn._deleteTimer = setTimeout(() => {
+        delete btn.dataset.confirmed;
+        btn.innerHTML        = saved.html;
+        btn.style.color      = saved.color;
+        btn.style.background = saved.bg;
+        btn.style.borderColor= saved.border;
+      }, 3000);
+      return;
+    }
+
+    clearTimeout(btn._deleteTimer);
+    const id    = btn.dataset.deleteId;
+    const store = btn.dataset.deleteStore;
+    const label = btn.dataset.deleteLabel || 'Eintrag';
+
+    if (store === 'artikel') {
+      const a = ADLStore.artikel.getById(id);
+      if (a) {
+        ADLStore.bewegungen.add({
+          nr:            ADLStore.bewegungen.nextNr('BWG'),
+          artikelnummer: a.artikelnummer || a.nr,
+          bezeichnung:   a.bezeichnung,
+          seriennr:      a.seriennr || '',
+          typ:           'Löschung',
+          von:           a.lagerort || 'Lager',
+          nach:          '—',
+          benutzer:      'System',
+          status:        'Gelöscht',
+        });
+      }
+    }
+
+    ADLStore[store]?.remove(id);
+    toast(`„${label}" wurde gelöscht.`, 'danger');
+    const mc = document.querySelector('.main-content');
+    if (mc) tryRender(mc);
+  });
 
 })();
