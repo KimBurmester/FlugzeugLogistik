@@ -528,6 +528,39 @@
       return;
     }
 
+    /* Auftrag (Auftrag.html) */
+    if (mc.querySelector('#auftrag-projektnr') !== null) {
+      const nr = (mc.querySelector('#auftrag-nr')?.value ?? '').trim()
+              || ADLStore.auftraege.nextNr('AUF', 'nr');
+      ADLStore.auftraege.add({
+        nr,
+        projektnr:        val('auftrag-projektnr'),
+        kunde:            val('auftrag-kunde'),
+        typ:              val('auftrag-typ'),
+        prioritaet:       val('auftrag-prio'),
+        status:           val('auftrag-status') || 'Offen',
+        datum:            val('auftrag-datum'),
+        faellig:          val('auftrag-faellig'),
+        verantwortlicher: val('auftrag-verantwortlich'),
+        kostenstelle:     val('auftrag-kostenstelle'),
+        werk:             val('auftrag-werk'),
+        halle:            val('auftrag-halle'),
+        bemerkung:        val('auftrag-bemerkung'),
+      });
+      toast(`Auftrag „${nr}" wurde gespeichert.`);
+      mc.querySelectorAll('input[type="text"], input[type="date"], textarea').forEach(el => {
+        if (el.id !== 'auftrag-nr') el.value = '';
+      });
+      mc.querySelectorAll('select').forEach(el => (el.selectedIndex = 0));
+      const statusEl = mc.querySelector('#auftrag-status');
+      if (statusEl) statusEl.value = 'Offen';
+      const nrEl = mc.querySelector('#auftrag-nr');
+      if (nrEl) nrEl.value = ADLStore.auftraege.nextNr('AUF', 'nr');
+      const datumEl = mc.querySelector('#auftrag-datum');
+      if (datumEl) datumEl.value = new Date().toISOString().slice(0, 10);
+      return;
+    }
+
     /* Bestellung (Bestellung.html) */
     if (mc.querySelector('#bestellnummer') !== null) {
       const nr = val('bestellnummer');

@@ -199,6 +199,7 @@ function renderSidebar(src) {
           const doc = new DOMParser().parseFromString(html, 'text/html');
           const main = doc.querySelector('main');
           mainContent.innerHTML = main ? main.innerHTML : '';
+          runEmbeddedScripts(mainContent);
         });
       nav.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
       item.classList.add('active');
@@ -207,6 +208,19 @@ function renderSidebar(src) {
 }
 
 renderSidebar('');
+
+/* ==========================================================================
+   Eingebettete <script>-Tags nach innerHTML-Injektion ausführen
+   ========================================================================== */
+
+function runEmbeddedScripts(container) {
+  container.querySelectorAll('script').forEach(old => {
+    const s = document.createElement('script');
+    [...old.attributes].forEach(a => s.setAttribute(a.name, a.value));
+    s.textContent = old.textContent;
+    old.replaceWith(s);
+  });
+}
 
 /* ==========================================================================
    data-navigate: Seitennavigation per Button (z. B. in Datenbankseiten)
@@ -225,6 +239,7 @@ document.addEventListener('click', e => {
       const doc = new DOMParser().parseFromString(html, 'text/html');
       const main = doc.querySelector('main');
       mainContent.innerHTML = main ? main.innerHTML : '';
+      runEmbeddedScripts(mainContent);
       if (editId) {
         document.dispatchEvent(new CustomEvent('adl:edit-navigate', { detail: { editId } }));
       }
@@ -260,6 +275,7 @@ document.querySelectorAll('.tabs').forEach(group => {
             const doc = new DOMParser().parseFromString(html, 'text/html');
             const main = doc.querySelector('main');
             mainContent.innerHTML = main ? main.innerHTML : '';
+            runEmbeddedScripts(mainContent);
           });
       } else {
         mainContent.innerHTML = dashboardHTML;

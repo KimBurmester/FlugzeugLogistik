@@ -1,100 +1,235 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aero Dynamic Logistic – Auftragsverwaltung</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="../logistikapp.png">
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Auftragsverwaltung – Aero Dynamic Logistic</title>
+  <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
 <main>
 <section class="container">
-    <h2 class="section-title">Stammdaten des Auftrags</h2>
 
-    <!-- Allgemeine Auftragsdaten -->
-    <p class="form-group-label">Allgemeine Auftragsdaten</p>
-    <div class="grid-4">
-        <div class="field">
-            <label>Auftragsnummer</label>
-            <input type="text" id="auftragsnummer" placeholder="z. B. AUF-2026-0001" />
-        </div>
-        <div class="field">
-            <label>Projektnummer</label>
-            <input type="text" id="projektnummer" placeholder="z. B. PRJ-2026-042" />
-        </div>
-        <div class="field">
-            <label>Kunde / Auftraggeber</label>
-            <input type="text" id="kunde" placeholder="z. B. Lufthansa Technik AG" />
-        </div>
-        <div class="field">
-            <label>Auftragstyp</label>
-            <select id="auftragstyp">
-                <option value=""></option>
-                <option>Produktion</option>
-                <option>Materialbestellung</option>
-                <option>Transportauftrag</option>
-                <option>Wartung</option>
-                <option>Reparatur</option>
-            </select>
-        </div>
+  <div class="page-header">
+    <div>
+      <h2 class="section-title" style="margin:0">Auftragsverwaltung</h2>
+      <p style="font-size:13px;color:var(--text-secondary);margin:4px 0 0">Neuen Auftrag anlegen</p>
     </div>
-    <div class="grid-4">
-        <div class="field">
-            <label>Priorität</label>
-            <select id="prioritaet">
-                <option value=""></option>
-                <option>Niedrig</option>
-                <option>Normal</option>
-                <option>Hoch</option>
-                <option>Kritisch</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Status</label>
-            <select id="status">
-                <option value=""></option>
-                <option>Neu</option>
-                <option>Offen</option>
-                <option>In Bearbeitung</option>
-                <option>Abgeschlossen</option>
-                <option>Storniert</option>
-            </select>
-        </div>
-        <div class="field">
-            <label>Erstellungsdatum</label>
-            <input type="date" id="erstellungsdatum" />
-        </div>
-        <div class="field">
-            <label>Änderungsdatum</label>
-            <input type="date" id="aenderungsdatum" />
-        </div>
-    </div>
-    <div class="grid-4">
-        <div class="field">
-            <label>Verantwortlicher Mitarbeiter</label>
-            <input type="text" id="mitarbeiter" placeholder="z. B. K. Burmester" />
-        </div>
-        <div class="field">
-            <label>Kostenstelle</label>
-            <input type="text" id="kostenstelle" placeholder="z. B. KST-4710" />
-        </div>
-        <div class="field">
-            <label>Werk / Standort</label>
-            <input type="text" id="werk" placeholder="z. B. Werk Hamburg-Nord" />
-        </div>
-        <div class="field">
-            <label>Halle / Bahnhof / Fach</label>
-            <input type="text" id="halle" placeholder="z. B. Halle 2 / Gleis 4 / F03" />
-        </div>
-    </div>
+  </div>
 
-    <!-- Buttons -->
-    <div class="form-actions">
-        <button class="btn btn-primary">Speichern</button>
-        <button class="btn">Zurücksetzen</button>
+  <!-- Allgemeine Auftragsdaten -->
+  <p class="form-group-label">Allgemeine Auftragsdaten</p>
+  <div class="grid-4">
+    <div class="field">
+      <label>Auftragsnummer</label>
+      <input type="text" id="auftrag-nr" placeholder="wird automatisch vergeben" readonly
+             style="color:var(--text-secondary);background:var(--bg-secondary);" />
     </div>
+    <div class="field">
+      <label>Projektnummer</label>
+      <input type="text" id="auftrag-projektnr" placeholder="z. B. PRJ-2026-042" />
+    </div>
+    <div class="field">
+      <label>Kunde / Auftraggeber</label>
+      <select id="auftrag-kunde">
+        <option value="">— bitte wählen —</option>
+        <optgroup label="Airlines – Deutschland">
+          <option>Deutsche Lufthansa AG</option>
+          <option>Eurowings GmbH</option>
+          <option>Condor Flugdienst GmbH</option>
+          <option>TUIfly GmbH</option>
+        </optgroup>
+        <optgroup label="Airlines – Europa">
+          <option>Air France S.A.</option>
+          <option>British Airways PLC</option>
+          <option>KLM Royal Dutch Airlines</option>
+          <option>Ryanair DAC</option>
+          <option>easyJet plc</option>
+          <option>Swiss International Air Lines AG</option>
+          <option>Turkish Airlines A.Ş.</option>
+          <option>Iberia L.A.E.</option>
+          <option>Finnair PLC</option>
+          <option>Austrian Airlines AG</option>
+          <option>Brussels Airlines SA</option>
+        </optgroup>
+        <optgroup label="Airlines – International">
+          <option>Emirates</option>
+          <option>Qatar Airways</option>
+          <option>Singapore Airlines</option>
+          <option>Delta Air Lines Inc.</option>
+          <option>United Airlines Inc.</option>
+          <option>American Airlines Inc.</option>
+          <option>Air Canada</option>
+          <option>Cathay Pacific Airways</option>
+          <option>Japan Airlines Co. Ltd.</option>
+          <option>All Nippon Airways Co. Ltd.</option>
+        </optgroup>
+        <optgroup label="MRO &amp; Technik">
+          <option>Lufthansa Technik AG</option>
+          <option>Air France Industries KLM E&amp;M</option>
+          <option>SR Technics Switzerland AG</option>
+          <option>Sabena Technics S.A.</option>
+          <option>HAECO Hong Kong</option>
+        </optgroup>
+        <optgroup label="Hersteller &amp; Zulieferer">
+          <option>Airbus SE</option>
+          <option>The Boeing Company</option>
+          <option>MTU Aero Engines AG</option>
+          <option>Rolls-Royce Deutschland Ltd &amp; Co. KG</option>
+          <option>Safran S.A.</option>
+          <option>Collins Aerospace</option>
+          <option>Honeywell Aerospace</option>
+          <option>GE Aviation</option>
+          <option>Pratt &amp; Whitney</option>
+          <option>Liebherr Aerospace</option>
+          <option>Diehl Aviation GmbH</option>
+        </optgroup>
+        <optgroup label="Flughäfen &amp; Ground Services">
+          <option>Fraport AG</option>
+          <option>Flughafen München GmbH</option>
+          <option>Flughafen Hamburg GmbH</option>
+          <option>Flughafen Stuttgart GmbH</option>
+          <option>Flughafen Düsseldorf GmbH</option>
+          <option>Berlin Brandenburg Airport GmbH</option>
+          <option>Swissport International AG</option>
+        </optgroup>
+        <optgroup label="Verteidigung &amp; Raumfahrt">
+          <option>Airbus Defence and Space GmbH</option>
+          <option>Leonardo S.p.A.</option>
+          <option>BAE Systems PLC</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="field">
+      <label>Auftragstyp</label>
+      <select id="auftrag-typ">
+        <option value=""></option>
+        <option>Produktion</option>
+        <option>Materialbestellung</option>
+        <option>Transportauftrag</option>
+        <option>Wartung</option>
+        <option>Reparatur</option>
+      </select>
+    </div>
+  </div>
+  <div class="grid-4">
+    <div class="field">
+      <label>Priorität</label>
+      <select id="auftrag-prio">
+        <option value=""></option>
+        <option>Niedrig</option>
+        <option>Normal</option>
+        <option>Hoch</option>
+        <option>Kritisch</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Status</label>
+      <select id="auftrag-status">
+        <option value=""></option>
+        <option>Neu</option>
+        <option selected>Offen</option>
+        <option>In Bearbeitung</option>
+        <option>Abgeschlossen</option>
+        <option>Storniert</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Erstellungsdatum</label>
+      <input type="date" id="auftrag-datum" />
+    </div>
+    <div class="field">
+      <label>Fällig am</label>
+      <input type="date" id="auftrag-faellig" />
+    </div>
+  </div>
+
+  <!-- Organisation -->
+  <p class="form-group-label">Organisation</p>
+  <div class="grid-4">
+    <div class="field">
+      <label>Verantwortlicher Mitarbeiter</label>
+      <input type="text" id="auftrag-verantwortlich" placeholder="z. B. K. Burmester" />
+    </div>
+    <div class="field">
+      <label>Kostenstelle</label>
+      <input type="text" id="auftrag-kostenstelle" placeholder="z. B. KST-4710" />
+    </div>
+    <div class="field">
+      <label>Werk / Standort</label>
+      <select id="auftrag-werk">
+        <option value="">— bitte wählen —</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Halle / Bereich</label>
+      <select id="auftrag-halle">
+        <option value="">— bitte wählen —</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Beschreibung -->
+  <p class="form-group-label">Beschreibung</p>
+  <div class="field">
+    <label>Bemerkung / Beschreibung</label>
+    <textarea id="auftrag-bemerkung" rows="3"
+      placeholder="Optionale Beschreibung oder Hinweise zum Auftrag…"></textarea>
+  </div>
+
+  <div class="form-actions">
+    <button class="btn btn-primary">Auftrag speichern</button>
+  </div>
+
 </section>
+
+<script>
+(function () {
+  function fillNextNr() {
+    const el = document.getElementById('auftrag-nr');
+    if (el && typeof ADLStore !== 'undefined') {
+      el.value = ADLStore.auftraege.nextNr('AUF', 'nr');
+    }
+  }
+  function fillDate() {
+    const el = document.getElementById('auftrag-datum');
+    if (el && !el.value) el.value = new Date().toISOString().slice(0, 10);
+  }
+  function fillWerk() {
+    const el = document.getElementById('auftrag-werk');
+    if (!el || typeof ADLStore === 'undefined') return;
+    const cur = el.value;
+    const lager = ADLStore.lager.getAll();
+    el.innerHTML = '<option value="">— bitte wählen —</option>' +
+      lager.map(l => `<option value="${l.bezeichnung}">${l.nr} – ${l.bezeichnung}</option>`).join('');
+    if (cur) el.value = cur;
+  }
+  function fillHalle(filterBezeichnung) {
+    const el = document.getElementById('auftrag-halle');
+    if (!el || typeof ADLStore === 'undefined') return;
+    const cur = el.value;
+    const hallen = ADLStore.hallen.getAll();
+    const filtered = filterBezeichnung
+      ? (() => {
+          const lager = ADLStore.lager.getAll().find(l => l.bezeichnung === filterBezeichnung);
+          return lager ? hallen.filter(h => h.lagerNr === lager.nr) : hallen;
+        })()
+      : hallen;
+    el.innerHTML = '<option value="">— bitte wählen —</option>' +
+      filtered.map(h => `<option value="${h.bezeichnung}">${h.nr} – ${h.bezeichnung}</option>`).join('');
+    if (cur) el.value = cur;
+  }
+
+  fillNextNr();
+  fillDate();
+  fillWerk();
+  fillHalle();
+
+  document.getElementById('auftrag-werk')?.addEventListener('change', function () {
+    fillHalle(this.value);
+  });
+})();
+</script>
 </main>
 </body>
 </html>
